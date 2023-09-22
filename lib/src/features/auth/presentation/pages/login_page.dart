@@ -5,6 +5,7 @@
  */
 
 import 'package:adaptive_sizer/adaptive_sizer.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meeting_room/localization/l10n.dart';
@@ -17,6 +18,7 @@ import 'package:meeting_room/src/core/widgets/widgets.dart';
 import '../blocs/login/login_cubit.dart';
 import '../blocs/login_form/login_form_cubit.dart';
 
+@RoutePage()
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 

@@ -4,14 +4,18 @@
  * Company: EB Pearls
  */
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meeting_room/src/core/di/injector.dart';
 import 'package:meeting_room/src/core/extensions/extensions.dart';
 import 'package:meeting_room/src/core/routes/app_router.dart';
+import 'package:meeting_room/src/features/auth/auth.dart';
+import 'package:meeting_room/src/features/dashboard/dashboard.dart';
 
 import '../blocs/app/app_cubit.dart';
 
+@RoutePage()
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
 
@@ -23,7 +27,7 @@ class SplashPage extends StatelessWidget {
           state.maybeWhen(
             orElse: () {},
             authenticated: () {
-              getIt<AppRouter>().replace(const DashboardRoute());
+              getIt<AppRouter>().push(const DashboardRoute());
             },
             unAuthenticated: () {
               getIt<AppRouter>().replace(const LoginRoute());

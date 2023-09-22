@@ -27,7 +27,8 @@ class AuthRepositoryImpl extends BaseRepository implements AuthRepository {
     return await handleNetworkCall<LoginModel, String>(
       call: _remoteSource.login(values),
       onSuccess: (loginModel) {
-        unawaited(_storage.saveSession(loginModel.toEntity));
+        unawaited(_storage.saveToken(
+            loginModel.toEntity.accessToken, loginModel.toEntity.refreshToken));
         return 'Success';
       },
     );

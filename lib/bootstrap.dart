@@ -37,7 +37,7 @@ Future<void> bootstrap(
   Bloc.observer = AppBlocObserver();
   GoogleFonts.config.allowRuntimeFetching = false;
   FlutterError.onError = (FlutterErrorDetails details) {
-    logger.e(details.exceptionAsString(), details.exception, details.stack);
+    logger.e(details.exceptionAsString());
   };
   await Env().loadVars(env);
   _addFontsLicenses();
@@ -45,7 +45,7 @@ Future<void> bootstrap(
   await runZonedGuarded(
     () async => runApp(await builder()),
     (Object error, StackTrace stackTrace) =>
-        logger.e(error.toString(), error, stackTrace),
+        logger.e(error.toString()), 
   );
 }
 

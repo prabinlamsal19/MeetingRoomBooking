@@ -16,7 +16,7 @@ dependencies:
   cupertino_icons: ^1.0.5
 
   #router
-  auto_route: ^5.0.4
+  auto_route: ^7.8.1
 
   #dependency injection
   get_it: ^7.2.0
@@ -48,10 +48,10 @@ dependencies:
   hive_local_storage: ^1.0.3+1
 
   #logger
-  logger: ^1.2.2
+  logger: ^2.0.2
 
   # google fonts
-  google_fonts: ^4.0.3
+  google_fonts: ^6.1.0
 
   #native splash
   flutter_native_splash: ^2.2.19
@@ -61,7 +61,7 @@ dependencies:
   flutter_svg: ^2.0.2
 
   #device info plus
-  device_info_plus: ^8.1.0
+  device_info_plus: ^9.0.3
 
 
 dev_dependencies:
@@ -75,14 +75,14 @@ dev_dependencies:
   json_serializable: ^6.6.1
   freezed: ^2.3.2
   injectable_generator: ^2.1.4
-  auto_route_generator: ^5.0.3
+  auto_route_generator: ^7.3.1
 
   #testing
-  mocktail: ^0.3.0
+  mocktail: ^1.0.0
   bloc_test: ^9.1.1
 
   # launcher icons
-  flutter_launcher_icons: ^0.12.0
+  flutter_launcher_icons: ^0.13.1
 
 flutter:
   uses-material-design: true
