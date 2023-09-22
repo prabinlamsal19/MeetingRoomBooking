@@ -1,0 +1,180 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+import "../../scripts/Fastfile"
+
+default_platform(:android)
+
+platform :android do
+    #==================================================================#
+    #                                                                  #
+    #         FUNCTION TO GENERATE APK                                 #
+    #                                                                  #
+    #==================================================================#
+
+    desc "Function to build apk for specific flavor"
+    def build_apk(flavor:,version:)
+         build_number = version.partition("-").last.to_i
+         build_version = version.partition("-").first.to_s
+         build_args = [ "--release","--flavor",flavor,"-t", "lib/main-#{flavor}.dart"]
+         flutter_build(
+               build: "apk",
+               build_name: build_version,
+               build_number: build_number,
+               build_args: build_args
+         )
+         @package_path = "../build/app/outputs/flutter-apk/app-#{flavor}-release.apk"
+         UI.success("Successfully generated apk at #{@package_path}")
+    end
+
+    #==================================================================#
+    #                                                                  #
+    #         FUNCTION TO GENERATE APPBUNDLE                           #
+    #                                                                  #
+    #==================================================================#
+
+    desc "Function to build appbundle for specific flavor"
+    def build_app_bundle(flavor:,version:)
+       build_number = version.partition("-").last.to_i
+       build_version = version.partition("-").first.to_s
+       build_args = ["--release","--flavor",flavor,"-t", "lib/main-#{flavor}.dart"]
+       flutter_build(
+            build: "appbundle",
+            build_number: build_number,
+            build_name: build_version,
+            build_args: build_args
+       )
+      @package_path = "../build/app/outputs/bundle/#{flavor}Release/app-#{flavor}-release.aab"
+      UI.success("Successfully generated appbundle at #{@package_path}")
+    end
+
+    #==================================================================#
+    #                                                                  #
+    #         LANE TO UPLOAD BUILD TO APPCENTER                        #
+    #                                                                  #
+    #==================================================================#
+    desc "upload build to appcenter"
+    private_lane :upload_to_appcenter do |options|
+
+        # 1. get type from options
+        type = options[:type]
+
+        if type == nil
+            type = 'dev'
+        end
+
+        appcenter_api_token = ENV["APPCENTER_ANDROID_API_TOKEN_#{type.upcase}"]
+        appcenter_owner_name = ENV["APPCENTER_OWNER_NAME"]
+        appcenter_owner_type = ENV["APPCENTER_OWNER_TYPE"]
+        appcenter_app_name = ENV["APPCENTER_ANDROID_APP_NAME_#{type.upcase}"]
+        appcenter_upload(
+              api_token: appcenter_api_token,
+              owner_name: appcenter_owner_name,
+              owner_type: appcenter_owner_type,
+              app_name: appcenter_app_name,
+              app_os: 'Android',
+              file: @package_path,
+              notify_testers: true
+        )
+
+    end
+
+    #==================================================================#
+    #                                                                  #
+    #         LANE TO GET VERSION FROM APPCENTER                       #
+    #                                                                  #
+    #==================================================================#
+    desc "get version of appcenter"
+    lane :get_app_center_version do |options|
+        type = options[:type]
+        release_type = options[:release]
+        if type == nil
+            type = "dev"
+        end
+
+        # 2. check valid types are coming through
+        UI.user_error!("Please provide type of build to create. The supported types are 'dev','stage', 'prod'. ") unless type != nil
+        UI.user_error!("The supported types are 'dev','stage', 'prod'.") unless ['dev', 'prod', 'stage'].include?(type)
+
+        appcenter_api_token = ENV["APPCENTER_ANDROID_API_TOKEN_#{type.upcase}"]
+        appcenter_owner_name = ENV["APPCENTER_OWNER_NAME"]
+        appcenter_owner_type = ENV["APPCENTER_OWNER_TYPE"]
+        appcenter_app_name = ENV["APPCENTER_ANDROID_APP_NAME_#{type.upcase}"]
+
+        begin
+            old_version_info = appcenter_fetch_version_number(
+                  api_token: appcenter_api_token,
+                  owner_name: appcenter_owner_name,
+                  app_name: appcenter_app_name
+                )
+            old_version_number = old_version_info["version"].to_s
+        rescue
+           old_version_number = "1.0.0"
+        end
+       # update build number
+       new_build_number = Time.now.to_i
+
+       # update version number
+       major_component = old_version_number.split(".")[0]
+       minor_component = old_version_number.split(".")[1]
+       patch_component = old_version_number.split(".")[2]
+
+       if release_type == nil
+           new_version = old_version_number
+       elsif release_type == 'major'
+           major = major_component.to_i + 1
+           new_version = "#{major}.0.0"
+       elsif release_type == 'minor'
+           minor = minor_component.to_i + 1
+           new_version = "#{major_component}.#{minor}.0"
+       else
+           patch = patch_component.to_i + 1
+           new_version = "#{major_component}.#{minor_component}.#{patch}"
+       end
+       updated_version = "#{new_version}-#{new_build_number}"
+    end
+
+    #==================================================================#
+    #                                                                  #
+    #         LANE TO GENERATE BUILD FOR DEVELOPMENT                   #
+    #            AND UPLOAD TO APPCENTER                               #
+    #==================================================================#
+    desc "build apk for development flavor and upload to appcenter"
+    lane :dev_appcenter do |options|
+        release_type = options[:release]
+        new_version = get_app_center_version(type:"dev", release:release_type)
+#         # make sure we are at main branch
+        ensure_git_branch(branch: 'main')
+        build_apk(flavor: 'development',version:new_version)
+        upload_to_appcenter(type: 'dev')
+    end
+
+    #==================================================================#
+    #                                                                  #
+    #         LANE TO GENERATE BUILD FOR STAGING                       #
+    #            AND UPLOAD TO APPCENTER                               #
+    #==================================================================#
+    desc "build apk for staging flavor and upload to appcenter"
+    lane :stage_appcenter do |options|
+        release_type = options[:release]
+        new_version = get_app_center_version(type:"stage", release:release_type)
+
+        # make sure we are at main branch
+        ensure_git_branch(branch: 'staging')
+        build_apk(flavor: 'staging',version:new_version)
+        upload_to_appcenter(type: 'stage')
+    end
+
+end

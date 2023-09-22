@@ -1,0 +1,47 @@
+opt_out_usage
+
+# Have an easy way to get the root of the project
+def root_path
+  Dir.pwd.sub(/.*\Kfastlane/, '').sub(/.*\Kandroid/, '').sub(/.*\Kios/, '').sub(/.*\K\/\//, '')
+end
+
+# Have an easy way to run flutter tasks on the root of the project
+lane :sh_on_root do |options|
+  command = options[:command]
+  sh("cd #{root_path} && #{command}")
+end
+
+# Tasks to be reused on each platform flow
+lane :clean_build do
+  sh_on_root(command: "flutter clean")
+end
+
+# Tasks to be reused on each platform flow
+lane :fetch_dependencies do
+  sh_on_root(command: "flutter pub get --suppress-analytics")
+end
+
+# Tasks to be reused on each platform
+lane :activate_and_run_intl_utils do
+    sh_on_root(command: "flutter pub global activate intl_utils && flutter pub global run intl_utils:generate")
+end
+
+# Tasks to be reused on each platform flow
+lane :run_generators do
+  sh_on_root(command: "flutter pub run build_runner build --delete-conflicting-outputs")
+end
+
+# Tasks to be reused on each platform flow
+lane :lint do
+  sh_on_root(command: "flutter format  --suppress-analytics --set-exit-if-changed lib/")
+end
+
+# Tasks to be reused on each platform flow
+lane :test do |options|
+  sh_on_root(command: "flutter test --no-pub --coverage --suppress-analytics")
+end
+
+# Tasks to be reused on each platform flow
+lane :analyze do |options|
+  sh_on_root(command: "flutter analyze . --no-pub --coverage --suppress-analytics")
+end

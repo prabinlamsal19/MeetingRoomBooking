@@ -1,0 +1,2 @@
+app_identifier(["com.meeting.meeting_room.dev","com.meeting.meeting_room.stg","com.meeting.meeting_room"]) # The bundle identifier of your app
+

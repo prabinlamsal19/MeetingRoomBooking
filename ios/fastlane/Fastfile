@@ -1,0 +1,503 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+import "../../scripts/Fastfile"
+
+default_platform(:ios)
+
+platform :ios do
+
+
+     #==================================================================#
+     #                                                                  #
+     #         LANE TO GET VERSION FROM APPCENTER                       #
+     #                                                                  #
+     #==================================================================#
+     desc "update version and build number"
+     private_lane :update_version_and_build_number do |options|
+        release_type  = options[:release]
+        old_build_number =  options[:old_build_number].to_s
+        old_version_number  = options[:old_version_number].to_s
+
+        # update build number
+        build_number_component = old_build_number.partition(".").first
+        build_number_extension = old_build_number.partition(".").last
+        new_build_number = Time.now.strftime("%y%m%d").to_s
+
+        if build_number_component == new_build_number
+            if build_number_extension.empty?
+                build_number_extension = "1"
+            else
+               build_number_extension = (build_number_extension.to_i + 1 ).to_s
+            end
+        else
+            build_number_extension = ""
+        end
+        new_build_number = build_number_extension.empty? ? new_build_number : "#{new_build_number}.#{build_number_extension}"
+
+        # update version number
+
+        major_component = old_version_number.split(".")[0]
+        minor_component = old_version_number.split(".")[1]
+        patch_component = old_version_number.split(".")[2]
+
+        if release_type == nil
+            new_version = old_version_number
+        elsif release_type == 'major'
+            major = major_component.to_i + 1
+            new_version = "#{major}.0.0"
+        elsif release_type == 'minor'
+            minor = minor_component.to_i + 1
+            new_version = "#{major_component}.#{minor}.0"
+        else
+            patch = patch_component.to_i + 1
+            new_version = "#{major_component}.#{minor_component}.#{patch}"
+        end
+        updated_version = "#{new_version}-#{new_build_number}"
+     end
+
+
+
+    #==================================================================#
+    #                                                                  #
+    #         LANE TO GET VERSION FROM APPCENTER                       #
+    #                                                                  #
+    #==================================================================#
+    desc "get version of testflight"
+    private_lane :get_testflight_version do |options|
+        type = options[:type]
+        release_type = options[:release]
+        if type == nil
+            type = "dev"
+        end
+      app_identifier = ENV["APP_IDENTIFIER_#{type.upcase}"]
+      app_name = ENV["APPSTORE_APP_NAME_#{type.upcase}"]
+      team_id = ENV["APPSTORE_TEAM_ID"]
+      app_target = ENV["APP_TARGET"]
+      set_appstore_key
+      api_key = lane_context[SharedValues::APP_STORE_CONNECT_API_KEY]
+
+      begin
+            latest_testflight_build_number(api_key:api_key,team_id: team_id,app_identifier:app_identifier)
+            old_build_number = lane_context[SharedValues::LATEST_TESTFLIGHT_BUILD_NUMBER]
+            old_build_version = lane_context[SharedValues::LATEST_TESTFLIGHT_VERSION]
+      rescue
+            old_build_number = Time.now.strftime("%y%m%d").to_s
+            old_build_version = "1.0.0"
+      else
+            old_build_number = Time.now.strftime("%y%m%d").to_s
+            old_build_version = "1.0.0"
+      end
+
+      # update version number and build number
+      new_version  = update_version_and_build_number(old_version_number:old_build_version,old_build_number:old_build_number,release:release_type)
+
+    end
+
+    #==================================================================#
+    #                                                                  #
+    #         LANE TO GET VERSION FROM APPCENTER                       #
+    #                                                                  #
+    #==================================================================#
+    desc "get version of appcenter"
+    private_lane :get_app_center_version do |options|
+        type = options[:type]
+        release_type = options[:release]
+
+        if type == nil
+            type = "dev"
+        end
+
+        # 2. check valid types are coming through
+        UI.user_error!("Please provide type of build to create. The supported types are 'dev','stage', 'prod'. ") unless type != nil
+        UI.user_error!("The supported types are 'dev','stage', 'prod'.") unless ['dev', 'prod', 'stage'].include?(type)
+
+        appcenter_api_token = ENV["APPCENTER_IOS_API_TOKEN_#{type.upcase}"]
+        appcenter_owner_name = ENV["APPCENTER_OWNER_NAME"]
+        appcenter_owner_type = ENV["APPCENTER_OWNER_TYPE"]
+        appcenter_app_name = ENV["APPCENTER_IOS_APP_NAME_#{type.upcase}"]
+
+        begin
+            old_version_info = appcenter_fetch_version_number(
+              api_token: appcenter_api_token,
+              owner_name: appcenter_owner_name,
+              app_name: appcenter_app_name
+            )
+             old_build_number = old_version_info["build_number"].to_s
+             old_version_number = old_version_info["version"].to_s
+        rescue
+            old_build_number = Time.now.strftime("%y%m%d").to_s
+            old_version_number = "1.0.0"
+        end
+
+        # update version number and build number
+        new_version = update_version_and_build_number(old_build_number: old_build_number, old_version_number: old_version_number,release:release_type)
+    end
+
+
+    #==================================================================#
+    #                                                                  #
+    #         LANE TO UPLOAD BUILD TO APPCENTER                        #
+    #                                                                  #
+    #==================================================================#
+    desc "upload build to appcenter"
+    private_lane :upload_to_appcenter do |options|
+
+        # 1. get type from options
+        type = options[:type]
+
+        # 2. check valid types are coming through
+        UI.user_error!("Please provide type of build to create. The supported types are 'dev','stage', 'prod'. ") unless type != nil
+        UI.user_error!("The supported types are 'dev','stage', 'prod'.") unless ['dev', 'prod', 'stage'].include?(type)
+
+        appcenter_api_token = ENV["APPCENTER_IOS_API_TOKEN_#{type.upcase}"]
+        appcenter_owner_name = ENV["APPCENTER_OWNER_NAME"]
+        appcenter_owner_type = ENV["APPCENTER_OWNER_TYPE"]
+        appcenter_app_name = ENV["APPCENTER_IOS_APP_NAME_#{type.upcase}"]
+        output_file = lane_context[SharedValues::IPA_OUTPUT_PATH]
+        appcenter_upload(
+              api_token: appcenter_api_token,
+              owner_name: appcenter_owner_name,
+              owner_type: appcenter_owner_type,
+              app_name: appcenter_app_name,
+              app_os: 'iOS',
+              file: output_file,
+              notify_testers: true
+        )
+    end
+
+
+
+     #==================================================================#
+     #                                                                  #
+     #         LANE TO SET APPSTORE API KEY                             #
+     #                                                                  #
+     #==================================================================#
+
+      desc "Lane to setup appstore connect api key"
+      private_lane :set_appstore_key do
+        key_id = ENV["ASC_KEY_ID"]
+        issuer_id = ENV["ASC_ISSUER_ID"]
+        key_content = ENV["ASC_KEY_CONTENT"]
+        app_store_connect_api_key(
+          key_id: key_id,
+          issuer_id: issuer_id,
+          key_content: key_content,
+          in_house: false,
+          is_key_content_base64: true
+        )
+      end
+
+      #==================================================================#
+      #                                                                  #
+      #         LANE TO UPLOAD BUILD TO TESTFLIGHT                        #
+      #                                                                  #
+      #==================================================================#
+      desc 'Lane to upload to testflight.'
+      private_lane :upload_to_test_flight do |options|
+        app_identifier = options[:app_identifier]
+        set_appstore_key
+        api_key = lane_context[SharedValues::APP_STORE_CONNECT_API_KEY]
+        output_file = lane_context[SharedValues::IPA_OUTPUT_PATH]
+
+        upload_to_testflight(
+          api_key: api_key,
+          ipa: output_file,
+          skip_submission: true,
+          expire_previous_builds: true,
+          app_identifier: app_identifier,
+          skip_waiting_for_build_processing: true
+        )
+
+      end
+
+    #==================================================================#
+    #                                                                  #
+    #         LANE TO GET CERTIFICATES AND PROFILES                    #
+    #                                                                  #
+    #==================================================================#
+
+    lane :get_cert do |options|
+       force = options[:force]
+       if force == nil
+          force = false
+       end
+       read_only = options[:read_only]
+
+       if read_only == nil
+          read_only = true
+       end
+
+        # if there is Appfile we try to get the app id from there
+        app_identifiers = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+
+        # get required values from ENV
+        git_url = ENV["CERTIFICATE_GIT_URL"]
+        git_branch = ENV["CERTIFICATE_GIT_BRANCH"]
+        team_id = ENV["APPSTORE_TEAM_ID"]
+
+        for app_identifier in app_identifiers do
+          # start getting certificates
+          get_certificates(app_identifier: app_identifier, git_url: git_url, git_branch: git_branch, team_id: team_id, type: "development",force:force,read_only:read_only)
+          get_certificates(app_identifier: app_identifier, git_url: git_url, git_branch: git_branch, team_id: team_id, type: "adhoc",force:force,read_only:read_only)
+          get_certificates(app_identifier: app_identifier, git_url: git_url, git_branch: git_branch, team_id: team_id, type: "appstore",force:force,read_only:read_only)
+        end
+
+      end
+
+    #==================================================================#
+    #                                                                  #
+    #         LANE TO GET CERTIFICATE FOR APP IDENTIFIER               #
+    #                                                                  #
+    #==================================================================#
+
+    # Method to generate or get certificates based on flags
+    def get_certificates(app_identifier:, git_url:, git_branch:, team_id:, type:, force:, read_only:)
+        set_appstore_key
+        api_key = lane_context[SharedValues::APP_STORE_CONNECT_API_KEY]
+        match(
+          git_url: git_url,
+          git_branch: git_branch,
+          readonly: read_only,
+          force: force,
+          type: type,
+          team_id: team_id,
+          app_identifier: app_identifier,
+          clone_branch_directly: true,
+          shallow_clone: true,
+          api_key: api_key,
+        )
+    end
+
+    #==================================================================#
+    #                                                                  #
+    #         LANE TO GENERATE  BUILD FOR DEVELOPMENT                  #
+    #             AND UPLOAD TO TESTFLIGHT                             #
+    #==================================================================#
+    desc "build ipa and release version to testflight"
+    lane :dev_testflight do
+         release = options[:release]
+         version = get_testflight_version(type: "dev",release:release)
+         app_identifier = ENV["APP_IDENTIFIER_DEV"]
+         app_name = ENV["APPSTORE_APP_NAME_DEV"]
+         team_id = ENV["APPSTORE_TEAM_ID"]
+         app_target = ENV["APP_TARGET"]
+         git_certificate_url = ENV["CERTIFICATE_GIT_URL"]
+         git_certificate_branch = ENV["CERTIFICATE_GIT_BRANCH"]
+         export_method = "app-store"
+         build_number = version.partition("-").last
+         build_version = version.partition("-").first
+         # profiles
+         profile_name =  "match AppStore #{app_identifier}"
+
+         # make sure on main branch
+         ensure_git_branch(branch: "main")
+
+        # build ipa
+        build_ipa(
+           flavor: "development",
+           profile_name:profile_name,
+           app_identifier:app_identifier,
+           export_method:export_method,
+           build_number: build_number,
+           build_version: build_version,
+        )
+        upload_to_test_flight(app_identifier:app_identifier)
+    end
+
+    #==================================================================#
+    #                                                                  #
+    #         LANE TO GENERATE  BUILD FOR STAGING                      #
+    #             AND UPLOAD TO TESTFLIGHT                             #
+    #==================================================================#
+    desc "build ipa and release version to testflight"
+    lane :stage_testflight do
+         release = options[:release]
+         version = get_testflight_version(type: "stage",release:release)
+         app_identifier = ENV["APP_IDENTIFIER_STAGE"]
+         app_name = ENV["APPSTORE_APP_NAME_STAGE"]
+         team_id = ENV["APPSTORE_TEAM_ID"]
+         app_target = ENV["APP_TARGET"]
+         git_certificate_url = ENV["CERTIFICATE_GIT_URL"]
+         git_certificate_branch = ENV["CERTIFICATE_GIT_BRANCH"]
+         export_method = "app-store"
+         build_number = version.partition("-").last
+         build_version = version.partition("-").first
+         # profiles
+         profile_name =  "match AppStore #{app_identifier}"
+
+         # make sure on main branch
+         ensure_git_branch(branch: "staging")
+
+        # build ipa
+        build_ipa(
+           flavor: "staging",
+           profile_name:profile_name,
+           app_identifier:app_identifier,
+           export_method:export_method,
+           build_number: build_number,
+           build_version: build_version,
+        )
+        upload_to_test_flight(app_identifier:app_identifier)
+    end
+
+    #==================================================================#
+    #                                                                  #
+    #         LANE TO GENERATE  BUILD FOR DEVELOPMENT                  #
+    #            AND UPLOAD TO APPCENTER                               #
+    #==================================================================#
+    desc "build ipa and release  to appcenter"
+    lane :dev_appcenter do |options|
+         release = options[:release]
+         version = get_app_center_version(type: "dev",release:release)
+         app_identifier = ENV["APP_IDENTIFIER_DEV"]
+         app_name = ENV["APPSTORE_APP_NAME_DEV"]
+         team_id = ENV["APPSTORE_TEAM_ID"]
+         app_target = ENV["APP_TARGET"]
+         git_certificate_url = ENV["CERTIFICATE_GIT_URL"]
+         git_certificate_branch = ENV["CERTIFICATE_GIT_BRANCH"]
+         export_method = "ad-hoc"
+         build_number = version.partition("-").last
+         build_version = version.partition("-").first
+         # profiles
+         profile_name =  "match AdHoc #{app_identifier}"
+
+         # make sure on main branch
+         ensure_git_branch(branch: "main")
+
+        # appcenter tokens
+         appcenter_api_token = ENV["APPCENTER_IOS_API_TOKEN_DEV"]
+         appcenter_app_name = ENV["APPCENTER_IOS_APP_NAME_DEV"]
+
+        # build ipa
+        build_ipa(
+           flavor: "development",
+           profile_name:profile_name,
+           app_identifier:app_identifier,
+           export_method:export_method,
+           build_number: build_number,
+           build_version: build_version,
+        )
+         upload_to_appcenter(type:"dev")
+    end
+
+    #==================================================================#
+    #                                                                  #
+    #         LANE TO GENERATE  BUILD FOR STAGING                      #
+    #            AND UPLOAD TO APPCENTER                               #
+    #==================================================================#
+    desc "build ipa and release to appcenter"
+    lane :stage_appcenter do |options|
+         release = options[:release]
+         version = get_app_center_version(type: "stage",release:release)
+         app_identifier = ENV["APP_IDENTIFIER_STAGE"]
+         app_name = ENV["APPSTORE_APP_NAME_STAGE"]
+         team_id = ENV["APPSTORE_TEAM_ID"]
+         app_target = ENV["APP_TARGET"]
+         git_certificate_url = ENV["CERTIFICATE_GIT_URL"]
+         git_certificate_branch = ENV["CERTIFICATE_GIT_BRANCH"]
+         export_method = "ad-hoc"
+         build_number = version.partition("-").last
+         build_version = version.partition("-").first
+         # profiles
+         profile_name =  "match AdHoc #{app_identifier}"
+
+         # make sure on main branch
+         ensure_git_branch(branch: "staging")
+
+        # appcenter tokens
+         appcenter_api_token = ENV["APPCENTER_IOS_API_TOKEN_STAGE"]
+         appcenter_app_name = ENV["APPCENTER_IOS_APP_NAME_STAGE"]
+
+        # build ipa
+        build_ipa(
+           flavor: "staging",
+           profile_name:profile_name,
+           app_identifier:app_identifier,
+           export_method:export_method,
+           build_number: build_number,
+           build_version: build_version,
+        )
+         upload_to_appcenter(type:"stage")
+    end
+
+    #==================================================================#
+    #                                                                  #
+    #         LANE TO GENERATE IOS BUILD                               #
+    #                                                                  #
+    #==================================================================#
+
+     desc 'build ipa'
+     def build_ipa(flavor:, export_method:,profile_name:,app_identifier:,build_number:,build_version:)
+        team_id = ENV["APPSTORE_TEAM_ID"]
+        build_args = ["--build-number", build_number, "--release","--no-codesign","--config-only","--flavor",flavor,"-t", "lib/main-#{flavor}.dart"]
+        # generate archive
+        flutter_build(
+              build: "ios",
+              build_name: build_version,
+              build_args: build_args
+        )
+
+        # export archives to IPA
+        gym(
+          workspace: "../ios/Runner.xcworkspace",
+          export_method: export_method,
+          scheme: flavor,
+          include_bitcode: false,
+          silent: true,
+          suppress_xcode_output: true,
+           export_options: {
+               signingStyle: "manual",
+               team_id: team_id,
+               compileBitcode: false,
+               provisioningProfiles: {
+                  "#{app_identifier}": "#{profile_name}"
+               }
+          }
+        )
+     end
+
+    ######################################################################################
+    #                                                                                    #
+    #                                 ADD NEW DEVICE                                     #
+    #                                                                                    #
+    ######################################################################################
+
+    desc "lane to add new device and then recreate the profiles"
+    lane :addDevice do
+        team_id = ENV["APP_STORE_TEAM_ID"]
+
+        # get the name and device id
+        device_name = prompt(text: "Enter Device Name: ")
+        device_id = prompt(text: "Enter Device Id: ")
+
+        # set the api key
+        set_appstore_key
+        api_key = lane_context[SharedValues::APP_STORE_CONNECT_API_KEY]
+
+        # add the device
+        register_devices(
+          devices: {
+            device_name => device_id
+          },
+          team_id: team_id,
+          api_key: api_key
+        )
+
+#         # force the update
+#         getCert(force: true,read_only:false)
+    end
+
+end

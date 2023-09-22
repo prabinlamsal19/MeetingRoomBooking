@@ -1,0 +1,112 @@
+name: meeting_room
+description: meeting room booking for EB Perals
+
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.18.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^1.0.5
+
+  #router
+  auto_route: ^5.0.4
+
+  #dependency injection
+  get_it: ^7.2.0
+  injectable: ^2.1.0
+
+  #state management
+  flutter_bloc: ^8.1.2
+
+  #adaptive sizes
+  adaptive_sizer:
+    git:
+      url: https://github.com/kishor98100/adaptive_sizer
+
+  #data models
+  freezed_annotation: ^2.2.0
+  json_annotation: ^4.8.0
+  equatable: ^2.0.5
+
+  #functional programmings
+  dartz: ^0.10.1
+
+
+
+  #network requests
+  dio: ^5.0.1
+
+
+  #Session
+  hive_local_storage: ^1.0.3+1
+
+  #logger
+  logger: ^1.2.2
+
+  # google fonts
+  google_fonts: ^4.0.3
+
+  #native splash
+  flutter_native_splash: ^2.2.19
+
+  #image and svg renderer
+  cached_network_image: ^3.2.3
+  flutter_svg: ^2.0.2
+
+  #device info plus
+  device_info_plus: ^8.1.0
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.1
+
+  #generators
+  build_runner: ^2.3.3
+  json_serializable: ^6.6.1
+  freezed: ^2.3.2
+  injectable_generator: ^2.1.4
+  auto_route_generator: ^5.0.3
+
+  #testing
+  mocktail: ^0.3.0
+  bloc_test: ^9.1.1
+
+  # launcher icons
+  flutter_launcher_icons: ^0.12.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
+    - google_fonts/
+
+
+flutter_intl:
+  enabled: true
+  class_name: AppLocalizations
+  main_locale: en
+  arb_dir: lib/localization/arb
+  output_dir: lib/localization/generated
+
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/splash.png
+  android_gravity: center
+  ios_content_mode: center
+  android: true
+  ios: true
+  android_12:
+    image: assets/images/splash_12.png
+    icon_background_color: "#FFFFFF"

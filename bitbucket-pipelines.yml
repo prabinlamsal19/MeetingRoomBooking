@@ -1,0 +1,137 @@
+# These are yaml anchors, reused later
+image: cirrusci/flutter:latest
+
+definitions:
+
+  scripts:
+    - script: &SetupPath
+                export PATH="$PATH:$HOME/flutter/bin/:$HOME/.pub-cache/bin:$HOME/AndroidSDK/cmdline-tools/latest/bin/:$HOME/AndroidSDK/platform-tools/"
+    - script: &SetupIntlUtils
+                flutter pub global activate intl_utils &&
+                flutter pub global run intl_utils:generate
+
+    - script: &CopyEnvs
+                echo $DEV_ENV | base64 -d > lib/src/core/envs/development_env.dart &&
+                echo $STAGE_ENV | base64 -d > lib/src/core/envs/staging_env.dart &&
+                echo $PROD_ENV | base64 -d > lib/src/core/envs/production_env.dart
+
+    - script: &SetupProject
+                flutter pub get &&
+                flutter pub run build_runner build --delete-conflicting-outputs
+
+    - script: &AndroidKeyStoreSetup
+                echo $RELEASE_PROPERTIES_ENCODED | base64 -d > ./android/release-keystore.properties &&
+                echo $RELEASE_KEYSTORE_ENCODED | base64 -d > ./android/release-keystore.jks
+    - script: &SetupBundle
+                bundle config set --local path '../vendor/bundle' &&
+                bundle install --path ../vendor/bundle
+
+  steps:
+    - step: &MobileRunner
+        clone:
+          depth: 1
+        runs-on:
+          - 'self.hosted'
+          - 'macos'
+          - 'ebpmobile'
+
+pipelines:
+  branches:
+    dev:
+      - step:
+          name: Build Android App and Upload To AppCenter
+          <<: *MobileRunner
+          script:
+            - *SetupPath
+            - *SetupIntlUtils
+            - *CopyEnvs
+            - *SetupProject
+            - *AndroidKeyStoreSetup
+            - cd android
+            - *SetupBundle
+            - bundle exec fastlane dev_appcenter
+
+      - step:
+          name: Build IOS App and Upload To AppCenter
+          <<: *MobileRunner
+          script:
+            - *SetupPath
+            - *SetupIntlUtils
+            - *CopyEnvs
+            - *SetupProject
+            - cd ios
+            - *SetupBundle
+            - bundle exec fastlane dev_appcenter
+
+      - step:
+          name: Build IOS App and Upload To TestFlight
+          <<: *MobileRunner
+          script:
+            - *SetupPath
+            - *SetupIntlUtils
+            - *CopyEnvs
+            - *SetupProject
+            - cd ios
+            - *SetupBundle
+            - bundle exec fastlane dev_testflight
+          trigger: manual
+
+
+    staging:
+      - step:
+          name: Build Android App and Upload To AppCenter
+          <<: *MobileRunner
+          script:
+            - *SetupPath
+            - *SetupIntlUtils
+            - *CopyEnvs
+            - *SetupProject
+            - *AndroidKeyStoreSetup
+            - cd android
+            - *SetupBundle
+            - bundle exec fastlane stage_appcenter
+
+      - step:
+          name: Build IOS App and Upload To TestFlight
+          <<: *MobileRunner
+          script:
+            - *SetupPath
+            - *SetupIntlUtils
+            - *CopyEnvs
+            - *SetupProject
+            - cd ios
+            - *SetupBundle
+            - bundle exec fastlane stage_testflight
+
+      - step:
+          name: Build IOS App and Upload To AppCenter
+          <<: *MobileRunner
+          script:
+            - *SetupPath
+            - *SetupIntlUtils
+            - *CopyEnvs
+            - *SetupProject
+            - cd ios
+            - *SetupBundle
+            - bundle exec fastlane stage_appcenter
+          trigger: manual
+
+  custom:
+    getCertificates:
+      - step:
+          name: Get Certificates For IOS
+          <<: *MobileRunner
+          script:
+            - cd ios
+            - *SetupBundle
+            - bundle exec fastlane get_cert
+
+    createCertificates:
+      - step:
+          name: Create New Certificates For IOS
+          <<: *MobileRunner
+          script:
+            - cd ios
+            - *SetupBundle
+            - bundle exec fastlane get_cert force:true
+            

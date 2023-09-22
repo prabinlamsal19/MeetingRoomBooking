@@ -1,0 +1,36 @@
+{
+
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "development",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main-development.dart",
+      "toolArgs": [
+        "--flavor",
+        "development"
+      ]
+    },
+    {
+      "name": "staging",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main-staging.dart",
+      "toolArgs": [
+        "--flavor",
+        "staging"
+      ]
+    },
+    {
+      "name": "production",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main-production.dart",
+      "toolArgs": [
+        "--flavor",
+        "production"
+      ]
+    }
+  ]
+}

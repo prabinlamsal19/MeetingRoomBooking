@@ -1,0 +1,10 @@
+{
+  "@@locale": "en",
+  "splashPageTitle": "Splash Page",
+  "dashboard": "Dashboard",
+  "login": "Login",
+  "emailHint": "Enter Email Address",
+  "passwordHint": "Enter Password",
+  "email": "Email Address",
+  "password": "Password"
+}
