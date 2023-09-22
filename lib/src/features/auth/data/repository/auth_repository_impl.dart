@@ -5,7 +5,6 @@
  */
 
 import 'dart:async';
-
 import 'package:meeting_room/src/core/base/base_repository.dart';
 import 'package:meeting_room/src/core/typedefs/typedefs.dart';
 import 'package:meeting_room/src/features/auth/data/models/login_model.dart';

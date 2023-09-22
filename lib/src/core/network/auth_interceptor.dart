@@ -42,8 +42,9 @@ class AuthInterceptor extends QueuedInterceptorsWrapper {
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     if (_storage.hasSession) {
-      final token = _storage.getSession();
-      options.headers.addAll({'Authorization': 'Bearer ${token!.accessToken}'});
+      // final token = _storage.getSession();
+      options.headers
+          .addAll({'Authorization': 'Bearer ${_storage.accessToken}'});
     }
     handler.next(options);
   }
