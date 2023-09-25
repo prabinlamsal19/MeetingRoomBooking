@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:meeting_room/src/features/auth/auth.dart';
 import 'app_router.dart';
 
 export 'app_router.gr.dart';
@@ -10,6 +11,7 @@ class AppRouter extends $AppRouter {
   final List<AutoRoute> routes = [
     AutoRoute(page: SplashRoute.page, path: AppRoutes.splash, initial: true),
     AutoRoute(page: LoginRoute.page, path: AppRoutes.login),
+    AutoRoute(page: TermsRoute.page, path: AppRoutes.terms),
     AutoRoute(page: DashboardRoute.page, path: AppRoutes.dashboard),
   ];
 }

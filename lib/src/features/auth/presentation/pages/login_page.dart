@@ -14,6 +14,7 @@ import 'package:meeting_room/src/core/extensions/extensions.dart';
 import 'package:meeting_room/src/core/routes/app_router.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
 import 'package:meeting_room/src/core/widgets/widgets.dart';
+import 'package:meeting_room/src/features/auth/auth.dart';
 
 import '../blocs/login/login_cubit.dart';
 import '../blocs/login_form/login_form_cubit.dart';
@@ -111,10 +112,16 @@ class LoginPage extends StatelessWidget {
                       style: AppStyles.text12Px.black,
                     ),
                     5.horizontalSpace,
-                    Text(
-                      l10n.privacyPolicy,
-                      textAlign: TextAlign.center,
-                      style: AppStyles.text12PxSemiBold.black,
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => TermsPage()));
+                      },
+                      child: Text(
+                        l10n.privacyPolicy,
+                        textAlign: TextAlign.center,
+                        style: AppStyles.text12PxSemiBold.black,
+                      ),
                     ),
                   ],
                 ),
