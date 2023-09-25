@@ -13,3 +13,18 @@ class AppRouter extends $AppRouter {
     AutoRoute(page: DashboardRoute.page, path: AppRoutes.dashboard),
   ];
 }
+
+
+/* 
+for syntax information 
+
+ AutoRoute(page: HomePageRoute.page, path: "/home", children: [
+      AutoRoute(
+          page: TransactionPageRoute.page,
+          path: 'transactions',
+          children: [
+            AutoRoute(page: NotesScreenRoute.page, path: 'notes', children: [
+              AutoRoute(page: NoteScreenRoute.page, path: 'notescreen')
+            ]),
+          ]),
+*/

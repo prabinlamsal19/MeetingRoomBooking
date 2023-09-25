@@ -3,8 +3,20 @@
   "splashPageTitle": "Splash Page",
   "dashboard": "Dashboard",
   "login": "Login",
-  "emailHint": "Enter Email Address",
+  "emailHint": "Email",
   "passwordHint": "Enter Password",
   "email": "Email Address",
-  "password": "Password"
+  "password": "Password",
+  "loginPageText": "Enter an email to login. If you don't have an account we'll create one",
+  "loginAgree": "By continuing, you agree to our",
+  "termsOfService" : "Terms of Service", 
+  "privacyPolicy": "Privacy Policy",
+  "and": "and", 
+  "termsAndConditions": "Terms & Conditions", 
+  "termsTitle": "Pearl Space Terms of Use and Privacy Policy", 
+  "termsDesc": "By using this app, you agree to Pearl Space's Terms and Conditions and confirm that you are 18 or older. The full terms of service can be viewed at",
+  "mainPointTitle": "The main points are:", 
+  "mainPointOne": "1. Lorem ipsum dollar sit", 
+  "mainPointTwo": "2. Lorem ipsum dollar sit", 
+  "mainPointThree": "3. Lorem ipsum dollar sit"
 }

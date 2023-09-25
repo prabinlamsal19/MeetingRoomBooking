@@ -31,7 +31,7 @@ class LoginFormCubit extends Cubit<LoginFormState> {
           .copyWith(value: value, errorMessage: '', isValid: true);
     else
       _emailField = state.emailField.copyWith(
-          value: value, errorMessage: 'Enter Valid Email', isValid: false);
+          value: value, errorMessage: 'Enter valid email.', isValid: false);
     emit(state.copyWith(emailField: _emailField));
   }
 

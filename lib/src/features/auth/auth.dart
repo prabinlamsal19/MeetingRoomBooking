@@ -5,3 +5,4 @@
  */
 
 export 'presentation/pages/login_page.dart';
+export 'presentation/pages/terms_page.dart';

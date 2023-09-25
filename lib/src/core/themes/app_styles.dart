@@ -7,6 +7,7 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:meeting_room/src/core/themes/app_colors.dart';
 
 abstract class AppStyles {
   // text 9px
