@@ -60,10 +60,7 @@ class PermissionsPage extends StatelessWidget {
               20.verticalSpace,
               CustomButton(
                 label: l10n.next,
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => DashboardPage()));
-                },
+                onPressed: () {},
                 fullWidth: true,
               )
             ],
