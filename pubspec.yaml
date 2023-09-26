@@ -63,6 +63,8 @@ dependencies:
   #device info plus
   device_info_plus: ^9.0.3
   flutter_otp_text_field: ^1.1.1
+  calendar_view: ^1.0.4
+  intl: ^0.18.1
 
 
 dev_dependencies:
@@ -110,4 +112,4 @@ flutter_native_splash:
   ios: true
   android_12:
     image: assets/images/splash_12.png
-    icon_background_color: "#FFFFFF"
+    icon_background_color: "#FFFFFF" 

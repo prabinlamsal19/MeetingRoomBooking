@@ -40,5 +40,6 @@
   "host": "Host",
   "noUpcomingEvent": "No upcoming event!", 
   "addEventsDesc": "Add events to get started.", 
-  "addEvent": "Add event" 
+  "addEvent": "Add event",
+  "calendar": "Calendar" 
 }

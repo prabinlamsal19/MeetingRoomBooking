@@ -11,8 +11,10 @@ import 'package:meeting_room/src/core/extensions/extensions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
 import 'package:meeting_room/src/core/widgets/empty_state_widget.dart';
+import 'package:meeting_room/src/features/calendar/calendar.dart';
 import 'package:meeting_room/src/features/dashboard/presentation/widgets/active_box.dart';
 import 'package:meeting_room/src/features/dashboard/presentation/widgets/plain_box.dart';
+import 'package:meeting_room/src/features/permissions/permissions.dart';
 
 @RoutePage()
 class DashboardPage extends StatelessWidget {
@@ -75,7 +77,13 @@ class DashboardPage extends StatelessWidget {
                         height: 240, width: 480, child: EmptyStateWidget()),
                   ],
                 ),
-              ))
+              )),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => CalendarPage()));
+              },
+              child: Text("clickme"))
         ],
       ),
     ));
