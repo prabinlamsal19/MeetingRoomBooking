@@ -42,7 +42,7 @@ class LoginPage extends StatelessWidget {
                 error: (message) {
                   context.showSnackbar(
                       title: l10n.login, message: message, error: true);
-                  getIt<AppRouter>().replaceAll([const DashboardRoute()]);
+                  // getIt<AppRouter>().replaceAll([const DashboardRoute()]);
                 },
                 validationError: (message, errors) {
                   if (errors.isEmpty) {
@@ -51,12 +51,12 @@ class LoginPage extends StatelessWidget {
                   } else {
                     context.read<LoginFormCubit>().setErrors(errors: errors);
                   }
-                  getIt<AppRouter>().replaceAll([const DashboardRoute()]);
+                  // getIt<AppRouter>().replaceAll([const DashboardRoute()]);
                 },
                 success: (message) {
                   context.showSnackbar(
                       title: l10n.login, message: message, error: true);
-                  getIt<AppRouter>().replaceAll([const DashboardRoute()]);
+                  // getIt<AppRouter>().replaceAll([const DashboardRoute()]);
                 },
               );
             },
