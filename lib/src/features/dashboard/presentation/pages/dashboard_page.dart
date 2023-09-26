@@ -8,7 +8,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:meeting_room/localization/l10n.dart';
 import 'package:meeting_room/src/core/extensions/extensions.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
+import 'package:meeting_room/src/features/dashboard/presentation/widgets/active_box.dart';
 import 'package:meeting_room/src/features/dashboard/presentation/widgets/plain_box.dart';
 
 @RoutePage()
@@ -38,9 +40,11 @@ class DashboardPage extends StatelessWidget {
                 text: l10n.groundFloor,
               ),
               20.horizontalSpace,
-              PlaneBox(
-                text: l10n.firstFloor,
-              ),
+              ActiveBox(
+                  floor: l10n.firstFloor,
+                  host: 'Hari Bahadur',
+                  totalTime: 30,
+                  timeLeft: 10),
             ],
           ),
           15.verticalSpace,

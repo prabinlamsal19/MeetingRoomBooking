@@ -36,5 +36,6 @@
   "firstFloor": "First Floor", 
   "secondFloor": "Second Floor", 
   "thirdFloor": "Third Floor", 
-  "upcomingEvents": "Upcoming Events"
+  "upcomingEvents": "Upcoming Events", 
+  "host": "Host"
 }
