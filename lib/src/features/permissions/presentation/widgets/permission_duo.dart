@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meeting_room/src/core/themes/app_colors.dart';
+import 'package:meeting_room/src/features/dashboard/presentation/pages/dashboard_page.dart';
 
 class PermissionDuo extends StatefulWidget {
   PermissionDuo({Key? key, required this.text}) : super(key: key);
@@ -27,6 +28,8 @@ class _PermissionDuoState extends State<PermissionDuo> {
               value: boolValue,
               onChanged: (value) {
                 print("The value given by the callback is $value");
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (Context) => const DashboardPage()));
                 setState(() {
                   boolValue = value;
                 });

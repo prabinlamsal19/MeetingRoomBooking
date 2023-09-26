@@ -4,6 +4,7 @@
  * Company: EB Pearls
  */
 import 'package:adaptive_sizer/adaptive_sizer.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meeting_room/localization/l10n.dart';
@@ -11,6 +12,7 @@ import 'package:meeting_room/src/core/extensions/extensions.dart';
 import 'package:meeting_room/src/core/themes/app_colors.dart';
 import 'package:meeting_room/src/core/themes/app_styles.dart';
 import 'package:meeting_room/src/core/widgets/widgets.dart';
+import 'package:meeting_room/src/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:meeting_room/src/features/permissions/presentation/widgets/permission_duo.dart';
 
 class PermissionsPage extends StatelessWidget {
@@ -60,7 +62,9 @@ class PermissionsPage extends StatelessWidget {
               20.verticalSpace,
               CustomButton(
                 label: l10n.next,
-                onPressed: () {},
+                onPressed: () {
+                 
+                },
                 fullWidth: true,
               )
             ],

@@ -31,5 +31,10 @@
   "camera": "Camera/Photo library", 
   "location": "Location", 
   "googleCalendar": "Google Calendar", 
-  "next": "Next"
+  "next": "Next", 
+  "groundFloor": "Ground Floor", 
+  "firstFloor": "First Floor", 
+  "secondFloor": "Second Floor", 
+  "thirdFloor": "Third Floor", 
+  "upcomingEvents": "Upcoming Events"
 }

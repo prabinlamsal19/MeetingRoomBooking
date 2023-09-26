@@ -266,6 +266,13 @@ abstract class AppStyles {
     height: calculateHeight(28, 24),
     fontStyle: FontStyle.normal,
   );
+  //text 28
+  static TextStyle text28PxSemiBold = GoogleFonts.roboto(
+    fontSize: 28.sp,
+    fontWeight: FontWeight.w600,
+    height: calculateHeight(34, 28),
+    fontStyle: FontStyle.normal,
+  );
   // text 36px
   //regular
   static TextStyle text36Px = GoogleFonts.roboto(
