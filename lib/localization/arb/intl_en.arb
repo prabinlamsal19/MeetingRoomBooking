@@ -18,5 +18,18 @@
   "mainPointTitle": "The main points are:", 
   "mainPointOne": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", 
   "mainPointTwo": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.", 
-  "mainPointThree": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut."
+  "mainPointThree": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.",
+  "resend": "Resend",
+  "otpText": "We have sent an OTP to", 
+  "welcomeBack": "Welcome Back", 
+  "notYourEmail": "Not your email?", 
+  "edit": "edit", 
+  "didGetOtp": "Didn't get the OTP?", 
+  "allowPermission" : "Allow Permission", 
+  "permissionInfo":"Please allow the required permissions below.", 
+  "notifications": "Notifications", 
+  "camera": "Camera/Photo library", 
+  "location": "Location", 
+  "googleCalendar": "Google Calendar", 
+  "next": "Next"
 }

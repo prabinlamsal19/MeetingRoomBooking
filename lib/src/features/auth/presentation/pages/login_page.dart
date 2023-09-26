@@ -15,6 +15,7 @@ import 'package:meeting_room/src/core/routes/app_router.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
 import 'package:meeting_room/src/core/widgets/widgets.dart';
 import 'package:meeting_room/src/features/auth/auth.dart';
+import 'package:meeting_room/src/features/otp/otp.dart';
 
 import '../blocs/login/login_cubit.dart';
 import '../blocs/login_form/login_form_cubit.dart';
@@ -40,7 +41,7 @@ class LoginPage extends StatelessWidget {
                 error: (message) {
                   context.showSnackbar(
                       title: l10n.login, message: message, error: true);
-                  getIt<AppRouter>().replaceAll([const DashboardRoute()]);
+                  // getIt<AppRouter>().replaceAll([const DashboardRoute()]);
                 },
                 validationError: (message, errors) {
                   if (errors.isEmpty) {
@@ -49,12 +50,12 @@ class LoginPage extends StatelessWidget {
                   } else {
                     context.read<LoginFormCubit>().setErrors(errors: errors);
                   }
-                  getIt<AppRouter>().replaceAll([const DashboardRoute()]);
+                  // getIt<AppRouter>().replaceAll([const DashboardRoute()]);
                 },
                 success: (message) {
                   context.showSnackbar(
                       title: l10n.login, message: message, error: true);
-                  getIt<AppRouter>().replaceAll([const DashboardRoute()]);
+                  // getIt<AppRouter>().replaceAll([const DashboardRoute()]);
                 },
               );
             },
@@ -96,10 +97,16 @@ class LoginPage extends StatelessWidget {
                       style: AppStyles.text12Px.black,
                     ),
                     5.horizontalSpace,
-                    Text(
-                      l10n.termsOfService,
-                      textAlign: TextAlign.center,
-                      style: AppStyles.text12PxSemiBold.black,
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => OtpPage()));
+                      },
+                      child: Text(
+                        l10n.termsOfService,
+                        textAlign: TextAlign.center,
+                        style: AppStyles.text12PxSemiBold.black,
+                      ),
                     ),
                   ],
                 ),
@@ -153,7 +160,10 @@ class _EmailField extends StatelessWidget {
             errorText: state.emailField.hasError
                 ? state.emailField.errorMessage
                 : null,
-            hintText: l10n.emailHint,
+            label: Text(
+              l10n.emailHint,
+              style: const TextStyle(color: Colors.black),
+            ),
           ),
         );
       },

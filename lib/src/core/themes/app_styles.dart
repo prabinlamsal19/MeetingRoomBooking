@@ -266,7 +266,6 @@ abstract class AppStyles {
     height: calculateHeight(28, 24),
     fontStyle: FontStyle.normal,
   );
-
   // text 36px
   //regular
   static TextStyle text36Px = GoogleFonts.roboto(

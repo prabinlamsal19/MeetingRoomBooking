@@ -1,0 +1,22 @@
+    Container(
+        padding: EdgeInsets.symmetric(horizontal: 8),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+        child: TextFormField(
+          decoration:
+              InputDecoration(
+                 labelText: "Label", 
+                 border: InputBorder.none,
+                 border: InputBorder.none,
+                 focusedBorder: InputBorder.none,
+                 enabledBorder: InputBorder.none,
+                 errorBorder: InputBorder.none,
+                 disabledBorder: InputBorder.none,
+                 focusedErrorBorder: InputBorder.none,
+         ),
+     ),
+);

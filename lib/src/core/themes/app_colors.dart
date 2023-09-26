@@ -36,4 +36,7 @@ abstract class AppColors {
   static const Color white = const Color(0xFFFFFFFF);
   static const Color black = const Color(0xFF000000);
   static const Color transparent = Colors.transparent;
+
+  //added colors
+  static const Color purpleAppColor = const Color(0xFF7350ff);
 }
