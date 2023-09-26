@@ -44,8 +44,7 @@ Future<void> bootstrap(
   await configureInjection();
   await runZonedGuarded(
     () async => runApp(await builder()),
-    (Object error, StackTrace stackTrace) =>
-        logger.e(error.toString()), 
+    (Object error, StackTrace stackTrace) => logger.e(error.toString()),
   );
 }
 

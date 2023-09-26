@@ -14,6 +14,8 @@ import 'package:meeting_room/src/core/extensions/extensions.dart';
 import 'package:meeting_room/src/core/routes/app_router.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
 import 'package:meeting_room/src/core/widgets/widgets.dart';
+import 'package:meeting_room/src/features/auth/auth.dart';
+import 'package:meeting_room/src/features/otp/otp.dart';
 
 import '../blocs/login/login_cubit.dart';
 import '../blocs/login_form/login_form_cubit.dart';
@@ -30,9 +32,6 @@ class LoginPage extends StatelessWidget {
         BlocProvider<LoginCubit>(create: (_) => getIt<LoginCubit>()),
       ],
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Login'),
-        ),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(20.r),
           child: BlocListener<LoginCubit, LoginState>(
@@ -63,20 +62,15 @@ class LoginPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                150.verticalSpace,
                 Text(
-                  l10n.email,
-                  style: AppStyles.text14PxMedium.textGrey,
+                  l10n.loginPageText,
+                  textAlign: TextAlign.center,
+                  style: AppStyles.text12Px.black,
                 ),
-                8.verticalSpace,
+                35.verticalSpace,
                 const _EmailField(),
                 20.verticalSpace,
-                Text(
-                  l10n.password,
-                  style: AppStyles.text14PxMedium.textGrey,
-                ),
-                8.verticalSpace,
-                const _PasswordField(),
-                30.verticalSpace,
                 BlocBuilder<LoginFormCubit, LoginFormState>(
                   builder: (context, state) {
                     final loading = context.select<LoginCubit, bool>((value) =>
@@ -93,46 +87,56 @@ class LoginPage extends StatelessWidget {
                     );
                   },
                 ),
-                30.verticalSpace,
+                245.verticalSpace,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      l10n.loginAgree,
+                      textAlign: TextAlign.center,
+                      style: AppStyles.text12Px.black,
+                    ),
+                    5.horizontalSpace,
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => OtpPage()));
+                      },
+                      child: Text(
+                        l10n.termsOfService,
+                        textAlign: TextAlign.center,
+                        style: AppStyles.text12PxSemiBold.black,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      l10n.and,
+                      textAlign: TextAlign.center,
+                      style: AppStyles.text12Px.black,
+                    ),
+                    5.horizontalSpace,
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => TermsPage()));
+                      },
+                      child: Text(
+                        l10n.privacyPolicy,
+                        textAlign: TextAlign.center,
+                        style: AppStyles.text12PxSemiBold.black,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class _PasswordField extends StatelessWidget {
-  const _PasswordField();
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<LoginFormCubit, LoginFormState>(
-      buildWhen: (previous, current) =>
-          current.passwordField != previous.passwordField,
-      builder: (context, state) {
-        return TextFormField(
-          style: AppStyles.text14PxMedium.primary,
-          keyboardType: TextInputType.visiblePassword,
-          textInputAction: TextInputAction.done,
-          obscureText: state.passwordField.obscureText,
-          onChanged: (value) =>
-              context.read<LoginFormCubit>().onPasswordChange(value),
-          decoration: InputDecoration(
-            errorText: state.passwordField.hasError
-                ? state.passwordField.errorMessage
-                : null,
-            hintText: l10n.passwordHint,
-            suffixIcon: IconButton(
-              onPressed: context.read<LoginFormCubit>().togglePassword,
-              icon: Icon(state.passwordField.obscureText
-                  ? Icons.visibility
-                  : Icons.visibility_off),
-            ),
-          ),
-        );
-      },
     );
   }
 }
@@ -147,7 +151,7 @@ class _EmailField extends StatelessWidget {
           current.emailField != previous.emailField,
       builder: (context, state) {
         return TextFormField(
-          style: AppStyles.text14PxMedium.primary,
+          style: AppStyles.text14Px.black,
           keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.next,
           onChanged: (value) =>
@@ -156,7 +160,10 @@ class _EmailField extends StatelessWidget {
             errorText: state.emailField.hasError
                 ? state.emailField.errorMessage
                 : null,
-            hintText: l10n.emailHint,
+            label: Text(
+              l10n.emailHint,
+              style: const TextStyle(color: Colors.black),
+            ),
           ),
         );
       },

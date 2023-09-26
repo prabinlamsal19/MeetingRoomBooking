@@ -11,7 +11,6 @@ import 'package:meeting_room/src/core/di/injector.dart';
 import 'package:meeting_room/src/core/extensions/extensions.dart';
 import 'package:meeting_room/src/core/routes/app_router.dart';
 import 'package:meeting_room/src/features/auth/auth.dart';
-import 'package:meeting_room/src/features/dashboard/dashboard.dart';
 
 import '../blocs/app/app_cubit.dart';
 
