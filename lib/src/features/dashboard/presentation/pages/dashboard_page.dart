@@ -78,12 +78,22 @@ class DashboardPage extends StatelessWidget {
                   ],
                 ),
               )),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => CalendarPage()));
-              },
-              child: Text("clickme"))
+          Row(
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => CalendarPage()));
+                  },
+                  child: Text("calendar")),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => CalendarPage()));
+                  },
+                  child: Text("notifications"))
+            ],
+          )
         ],
       ),
     ));
