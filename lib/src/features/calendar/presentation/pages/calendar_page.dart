@@ -57,10 +57,7 @@ class CalendarPage extends StatelessWidget {
                   // Return your widget to display as event tile.
                   return const Text('Event yeah!!');
                 },
-                pageViewPhysics: PageScrollPhysics( 
-                  
-
-                ),
+                pageViewPhysics: PageScrollPhysics(),
                 startDuration: const Duration(hours: 8),
                 timeLineBuilder: (date) {
                   if (date.minute == 0) {

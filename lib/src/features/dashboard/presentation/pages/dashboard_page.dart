@@ -14,6 +14,8 @@ import 'package:meeting_room/src/core/widgets/empty_state_widget.dart';
 import 'package:meeting_room/src/features/calendar/calendar.dart';
 import 'package:meeting_room/src/features/dashboard/presentation/widgets/active_box.dart';
 import 'package:meeting_room/src/features/dashboard/presentation/widgets/plain_box.dart';
+import 'package:meeting_room/src/features/notification/notification.dart';
+import 'package:meeting_room/src/features/notification/presentation/pages/settings_page.dart';
 import 'package:meeting_room/src/features/permissions/permissions.dart';
 
 @RoutePage()
@@ -44,7 +46,7 @@ class DashboardPage extends StatelessWidget {
               20.horizontalSpace,
               ActiveBox(
                   floor: l10n.firstFloor,
-                  host: 'Hari Bahadur',
+                  host: 'Baral Bahadur',
                   totalTime: 30,
                   timeLeft: 10),
             ],
@@ -85,13 +87,13 @@ class DashboardPage extends StatelessWidget {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => CalendarPage()));
                   },
-                  child: Text("calendar")),
+                  child: const Text('calendar')),
               ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => CalendarPage()));
+                        builder: (context) => const SettingsPage()));
                   },
-                  child: Text("notifications"))
+                  child: const Text('settings')),
             ],
           )
         ],
