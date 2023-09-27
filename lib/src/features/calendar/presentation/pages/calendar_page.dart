@@ -6,7 +6,9 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_view/calendar_view.dart';
+import 'package:hive_local_storage/hive_local_storage.dart';
 import 'package:meeting_room/localization/l10n.dart';
+import 'package:meeting_room/src/core/extensions/typography_extension.dart';
 import 'package:meeting_room/src/core/themes/app_colors.dart';
 import 'package:meeting_room/src/core/themes/app_styles.dart';
 import 'package:meeting_room/src/features/calendar/presentation/helpers/calender_helper.dart';
@@ -26,6 +28,7 @@ class CalendarPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             15.verticalSpace,
@@ -42,23 +45,22 @@ class CalendarPage extends StatelessWidget {
             //     },
             //     child: const Text("Add event(temp)")),
             Container(
-              height: 500,
+              alignment: Alignment.topLeft,
+              padding: const EdgeInsets.only(bottom: 8),
+              height: 510,
               width: 365,
-              margin: const EdgeInsets.symmetric(horizontal: 4),
               decoration: BoxDecoration(
                   border: Border.all(width: 1, color: AppColors.textGrey),
                   borderRadius: BorderRadius.circular(6)),
               child: DayView(
                 eventTileBuilder: (date, events, boundary, start, end) {
                   // Return your widget to display as event tile.
-                  return Container(
-                    height: 1,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            width: 5,
-                            color: const Color.fromARGB(255, 206, 204, 204))),
-                  );
+                  return const Text('Event yeah!!');
                 },
+                pageViewPhysics: PageScrollPhysics( 
+                  
+
+                ),
                 startDuration: const Duration(hours: 8),
                 timeLineBuilder: (date) {
                   if (date.minute == 0) {
@@ -77,9 +79,7 @@ class CalendarPage extends StatelessWidget {
                     return const Text('');
                   }
                 },
-
                 timeLineOffset: 8,
-
                 fullDayEventBuilder: (events, date) {
                   // Return your widget to display full day event view.
                   return Container(
@@ -87,9 +87,59 @@ class CalendarPage extends StatelessWidget {
                     height: 10,
                   );
                 },
-                dateStringBuilder: (date, {secondaryDate}) =>
-                    formatDateTime(date),
-
+                dayTitleBuilder: (date) => Container(
+                  height: 30,
+                  width: 365,
+                  decoration: const BoxDecoration(
+                    color: AppColors.textLight,
+                    border: Border(
+                      top: BorderSide(
+                        color: Colors.black, // Border color
+                        width: 0.3, // Border thickness
+                      ),
+                      left: BorderSide(
+                        color: Colors.black, // Border color
+                        width: 0.00001, // Border thickness
+                      ),
+                      right: BorderSide(
+                        color: Colors.black, // Border color
+                        width: 0.00001, // Border thickness
+                      ),
+                      bottom: BorderSide(
+                        color: Colors.black, // Border color
+                        width: 0.3, // Border thickness
+                      ),
+                    ),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(5),
+                      topRight: Radius.circular(5),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      12.horizontalSpace,
+                      const Column(
+                        children: [
+                          Text(
+                            'GMT',
+                            style: TextStyle(fontSize: 10),
+                          ),
+                          Text(
+                            '+5:45',
+                            style: TextStyle(fontSize: 10),
+                          ),
+                        ],
+                      ),
+                      10.horizontalSpace,
+                      const VerticalDivider(
+                        color: AppColors.textGrey,
+                      ),
+                      Text(formatDateTime(date)),
+                    ],
+                  ),
+                ),
+                // dateStringBuilder: (date, {secondaryDate}) =>
+                //     formatDateTime(date),
                 hourIndicatorSettings: const HourIndicatorSettings(
                     color: Color.fromARGB(255, 197, 196, 196), offset: -7),
                 minuteSlotSize: MinuteSlotSize.minutes15,
@@ -109,16 +159,15 @@ class CalendarPage extends StatelessWidget {
                     dashSpaceWidth: 2,
                     dashWidth: 2,
                     lineStyle: LineStyle.dashed),
-
                 timeLineWidth: 55, // To display live time line in day view.
                 showLiveTimeLineInAllDays:
-                    false, // To display live time line in all pages in day view.
+                    true, // To display live time line in all pages in day view.
                 minDay: DateTime(1990),
                 maxDay: DateTime(2050),
                 initialDay: DateTime(2021),
                 heightPerMinute: 0.67, // height occupied by 1 minute time span.
-                eventArranger:
-                    const SideEventArranger(), // To define how simultaneous events will be arranged.
+                // eventArranger:
+                //     const SideEventArranger(), // To define how simultaneous events will be arranged.
                 onEventTap: (events, date) => print(events),
               ),
             )
