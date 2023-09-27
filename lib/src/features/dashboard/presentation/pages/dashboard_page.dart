@@ -94,6 +94,12 @@ class DashboardPage extends StatelessWidget {
                         builder: (context) => const SettingsPage()));
                   },
                   child: const Text('settings')),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const SettingsPage()));
+                  },
+                  child: const Text('onboarding')),
             ],
           )
         ],
