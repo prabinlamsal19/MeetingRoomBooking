@@ -4,8 +4,9 @@
  * Company: EB Pearls
  */
 import 'package:adaptive_sizer/adaptive_sizer.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:meeting_room/src/core/extensions/extensions.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
 import 'package:meeting_room/src/features/notification/presentation/widgets/notification_card.dart';
 
@@ -39,7 +40,7 @@ class NotificationPage extends StatelessWidget {
                 ago_time: DateTime.now()),
             NotificationCard(
                 text:
-                    "Lorem Lorem lorem lorem ipsum ipsum pisum ipsum ipsum ipsum.",
+                    'Lorem Lorem lorem lorem ipsum ipsum ipsum ipsum ipsum ipsum.',
                 ago_time: DateTime.now()),
           ],
         ),
