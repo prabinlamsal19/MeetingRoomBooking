@@ -1,5 +1,6 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:meeting_room/localization/l10n.dart';
 import 'package:meeting_room/src/core/extensions/extensions.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
 import 'package:meeting_room/src/features/onboarding/presentation/widgets/onboarding_page_base.dart';
@@ -59,7 +60,7 @@ class OnboardingPageTwo extends StatelessWidget {
                   ),
                   55.h.verticalSpace,
                   Text(
-                    'Available Room',
+                    l10n.availableRoom,
                     style: AppStyles.text24PxSemiBold,
                   ),
                   10.verticalSpace,
@@ -67,7 +68,7 @@ class OnboardingPageTwo extends StatelessWidget {
                     height: 60.h,
                     width: 250.w,
                     child: Text(
-                      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+                      l10n.onboardingTwo,
                       style: AppStyles.text12PxMedium,
                       textAlign: TextAlign.center,
                     ),
@@ -84,7 +85,7 @@ class OnboardingPageTwo extends StatelessWidget {
                             Navigator.pop(context);
                           },
                           child: Text(
-                            'Skip',
+                            l10n.skip,
                             style: AppStyles.text16PxSemiBold.white,
                           ),
                         ),
@@ -99,7 +100,7 @@ class OnboardingPageTwo extends StatelessWidget {
                             );
                           },
                           child: Text(
-                            'Next',
+                            l10n.next,
                             style: AppStyles.text16PxSemiBold.black,
                           ),
                         )

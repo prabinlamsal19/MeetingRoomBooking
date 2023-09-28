@@ -5,6 +5,7 @@
  */
 import 'package:adaptive_sizer/adaptive_sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:meeting_room/localization/l10n.dart';
 import 'package:meeting_room/src/core/extensions/extensions.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
 import 'package:meeting_room/src/core/widgets/widgets.dart';
@@ -29,7 +30,7 @@ class SettingsPage extends StatelessWidget {
                 icon: const Icon(Icons.arrow_back)),
             10.verticalSpace,
             Text(
-              'Settings',
+              l10n.settings,
               style: AppStyles.text28PxSemiBold,
             ),
             const Divider(),
@@ -38,7 +39,7 @@ class SettingsPage extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               leading: SvgImage('assets/icons/profile.svg'),
               dense: true,
-              title: const Text('Profile'),
+              title: Text(l10n.profile),
               trailing: IconButton(
                 icon: const Icon(
                   Icons.chevron_right,
@@ -51,7 +52,7 @@ class SettingsPage extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               dense: true,
               leading: SvgImage('assets/icons/notification.svg'),
-              title: const Text('Notifications'),
+              title: Text(l10n.notifications),
               trailing: IconButton(
                 icon: const Icon(
                   Icons.chevron_right,

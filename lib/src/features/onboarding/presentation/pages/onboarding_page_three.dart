@@ -1,6 +1,7 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:meeting_room/localization/l10n.dart';
 import 'package:meeting_room/src/core/extensions/extensions.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
 import 'package:meeting_room/src/core/widgets/widgets.dart';
@@ -40,7 +41,7 @@ class OnboardingPageThree extends StatelessWidget {
                 ),
                 45.h.verticalSpace,
                 Text(
-                  'Notify Team Member',
+                  l10n.notifyTeamMembers,
                   style: AppStyles.text24PxSemiBold,
                 ),
                 10.verticalSpace,
@@ -48,7 +49,7 @@ class OnboardingPageThree extends StatelessWidget {
                   height: 60.h,
                   width: 250.w,
                   child: Text(
-                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+                    l10n.onboardingThree,
                     textAlign: TextAlign.center,
                     style: AppStyles.text12PxMedium,
                   ),
@@ -65,7 +66,7 @@ class OnboardingPageThree extends StatelessWidget {
                           Navigator.pop(context);
                         },
                         child: Text(
-                          'Skip',
+                          l10n.skip,
                           style: AppStyles.text16PxSemiBold.white,
                         ),
                       ),
@@ -76,7 +77,7 @@ class OnboardingPageThree extends StatelessWidget {
                                   const OnboardingPageFour()));
                         },
                         child: Text(
-                          'Next',
+                          l10n.next,
                           style: AppStyles.text16PxSemiBold.black,
                         ),
                       )

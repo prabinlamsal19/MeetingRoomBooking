@@ -41,5 +41,18 @@
   "noUpcomingEvent": "No upcoming event!", 
   "addEventsDesc": "Add events to get started.", 
   "addEvent": "Add event",
-  "calendar": "Calendar" 
+  "calendar": "Calendar",
+  "profile": "Profile",
+  "settings": "Settings",
+  "bookMeetings": "Book Meetings",
+  "availableRoom" : "Available room", 
+  "notifyTeamMembers" : "Notify team members",
+  "getStarted" : "Get started",
+  "thingsToDo" : "Things to do", 
+  "pearlSpace" : "Pearl space", 
+  "skip" : "Skip",
+  "onboardingOne": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", 
+  "onboardingTwo": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", 
+  "onboardingThree": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.", 
+  "onboardingFour": "Lorem Ipsum is simply dummy text of the printing and typesetting industry." 
 }

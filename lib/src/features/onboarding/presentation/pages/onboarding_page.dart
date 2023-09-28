@@ -1,5 +1,6 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:meeting_room/localization/l10n.dart';
 import 'package:meeting_room/src/core/extensions/extensions.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
 import 'package:meeting_room/src/core/widgets/widgets.dart';
@@ -41,7 +42,7 @@ class OnboardingPage extends StatelessWidget {
                       ),
                       10.verticalSpace,
                       Text(
-                        'Pearl Space',
+                        l10n.pearlSpace,
                         style: AppStyles.text18PxMedium,
                       )
                     ],
@@ -49,7 +50,7 @@ class OnboardingPage extends StatelessWidget {
                 ),
                 55.h.verticalSpace,
                 Text(
-                  'Book Meetings',
+                  l10n.bookMeetings,
                   style: AppStyles.text24PxSemiBold,
                 ),
                 10.verticalSpace,
@@ -57,7 +58,7 @@ class OnboardingPage extends StatelessWidget {
                   height: 60.h,
                   width: 250.w,
                   child: Text(
-                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+                    l10n.onboardingOne,
                     style: AppStyles.text12PxMedium,
                     textAlign: TextAlign.center,
                   ),
@@ -74,7 +75,7 @@ class OnboardingPage extends StatelessWidget {
                           Navigator.pop(context);
                         },
                         child: Text(
-                          'Skip',
+                          l10n.skip,
                           style: AppStyles.text16PxSemiBold.white,
                         ),
                       ),
@@ -84,7 +85,7 @@ class OnboardingPage extends StatelessWidget {
                               builder: (context) => const OnboardingPageTwo()));
                         },
                         child: Text(
-                          'Next',
+                          l10n.next,
                           style: AppStyles.text16PxSemiBold.black,
                         ),
                       )
