@@ -16,6 +16,7 @@ import 'package:meeting_room/src/features/dashboard/presentation/widgets/active_
 import 'package:meeting_room/src/features/dashboard/presentation/widgets/plain_box.dart';
 import 'package:meeting_room/src/features/notification/notification.dart';
 import 'package:meeting_room/src/features/notification/presentation/pages/settings_page.dart';
+import 'package:meeting_room/src/features/onboarding/onboarding.dart';
 import 'package:meeting_room/src/features/permissions/permissions.dart';
 
 @RoutePage()
@@ -97,7 +98,7 @@ class DashboardPage extends StatelessWidget {
               ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const SettingsPage()));
+                        builder: (context) => const OnboardingPage()));
                   },
                   child: const Text('onboarding')),
             ],

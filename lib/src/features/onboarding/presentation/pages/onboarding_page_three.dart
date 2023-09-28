@@ -1,13 +1,14 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meeting_room/src/core/extensions/extensions.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
 import 'package:meeting_room/src/core/widgets/widgets.dart';
+import 'package:meeting_room/src/features/onboarding/presentation/pages/onboarding_page_four.dart';
 import 'package:meeting_room/src/features/onboarding/presentation/widgets/onboarding_page_base.dart';
-import 'package:meeting_room/src/features/onboarding/presentation/pages/onboarding_page_two.dart';
 
-class OnboardingPage extends StatelessWidget {
-  const OnboardingPage({super.key});
+class OnboardingPageThree extends StatelessWidget {
+  const OnboardingPageThree({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,41 +16,31 @@ class OnboardingPage extends StatelessWidget {
       body: Stack(children: [
         const OnboardingPageBase(),
         Positioned(
-          top: 132.54.h,
+          top: 100.54.h,
           left: 25.32.w,
           child: Container(
             // color: Colors.black,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  width: 234.w, // Diameter of the circle
-                  height: 234.h, // Diameter of the circle
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      70.verticalSpace,
-                      SizedBox(
-                        height: 80.3653.h,
-                        child: SvgImage(
-                          'assets/icons/eblogo.svg',
-                        ),
+                Stack(
+                  children: [
+                    Container(
+                      width: 280.w, // Diameter of the circle
+                      height: 280.h, // Diameter of the circle
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
                       ),
-                      10.verticalSpace,
-                      Text(
-                        'Pearl Space',
-                        style: AppStyles.text18PxMedium,
-                      )
-                    ],
-                  ),
+                      child: Image.asset(
+                        'assets/images/single_tint_image.png',
+                      ),
+                    )
+                  ],
                 ),
-                55.h.verticalSpace,
+                45.h.verticalSpace,
                 Text(
-                  'Book Meetings',
+                  'Notify Team Member',
                   style: AppStyles.text24PxSemiBold,
                 ),
                 10.verticalSpace,
@@ -58,8 +49,8 @@ class OnboardingPage extends StatelessWidget {
                   width: 250.w,
                   child: Text(
                     'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-                    style: AppStyles.text12PxMedium,
                     textAlign: TextAlign.center,
+                    style: AppStyles.text12PxMedium,
                   ),
                 ),
                 80.verticalSpace,
@@ -70,7 +61,9 @@ class OnboardingPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                         child: Text(
                           'Skip',
                           style: AppStyles.text16PxSemiBold.white,
@@ -79,7 +72,8 @@ class OnboardingPage extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const OnboardingPageTwo()));
+                              builder: (context) =>
+                                  const OnboardingPageFour()));
                         },
                         child: Text(
                           'Next',
