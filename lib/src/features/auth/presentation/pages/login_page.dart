@@ -62,7 +62,9 @@ class LoginPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                150.verticalSpace,
+                100.verticalSpace,
+                SvgImage('assets/icons/full_eb_logo.svg'),
+                40.verticalSpace,
                 Text(
                   l10n.loginPageText,
                   textAlign: TextAlign.center,
@@ -87,7 +89,7 @@ class LoginPage extends StatelessWidget {
                     );
                   },
                 ),
-                245.verticalSpace,
+                216.verticalSpace,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
