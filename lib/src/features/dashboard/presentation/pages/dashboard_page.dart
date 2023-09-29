@@ -7,17 +7,12 @@ import 'package:adaptive_sizer/adaptive_sizer.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:meeting_room/localization/l10n.dart';
-import 'package:meeting_room/src/core/extensions/extensions.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
 import 'package:meeting_room/src/core/widgets/empty_state_widget.dart';
 import 'package:meeting_room/src/features/calendar/calendar.dart';
 import 'package:meeting_room/src/features/dashboard/presentation/widgets/active_box.dart';
 import 'package:meeting_room/src/features/dashboard/presentation/widgets/plain_box.dart';
-import 'package:meeting_room/src/features/notification/notification.dart';
 import 'package:meeting_room/src/features/notification/presentation/pages/settings_page.dart';
-import 'package:meeting_room/src/features/onboarding/onboarding.dart';
-import 'package:meeting_room/src/features/permissions/permissions.dart';
 
 @RoutePage()
 class DashboardPage extends StatelessWidget {
@@ -95,12 +90,6 @@ class DashboardPage extends StatelessWidget {
                         builder: (context) => const SettingsPage()));
                   },
                   child: const Text('settings')),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const OnboardingPage()));
-                  },
-                  child: const Text('onboarding')),
             ],
           )
         ],

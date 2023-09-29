@@ -1,8 +1,11 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:meeting_room/localization/l10n.dart';
 import 'package:meeting_room/src/app/app.dart';
+import 'package:meeting_room/src/core/di/injector.dart';
 import 'package:meeting_room/src/core/extensions/extensions.dart';
+import 'package:meeting_room/src/core/routes/app_router.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
 import 'package:meeting_room/src/core/widgets/widgets.dart';
 import 'package:meeting_room/src/features/dashboard/dashboard.dart';
@@ -79,13 +82,14 @@ class OnboardingPageFour extends StatelessWidget {
                   SizedBox(
                     width: 316.w,
                     child: CustomButton(
+                        isDisabled: false,
                         backgroundColor: AppColors.black,
                         disabledColor: AppColors.black,
                         textColor: AppColors.white,
                         fullWidth: true,
                         label: l10n.getStarted,
-                        onPressed: () => {
-                            }),
+                        onPressed: () =>
+                            {getIt<AppRouter>().push(const LoginRoute())}),
                   ),
                 ],
               ),

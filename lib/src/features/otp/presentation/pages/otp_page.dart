@@ -4,6 +4,7 @@
  * Company: EB Pearls
  */
 import 'package:adaptive_sizer/adaptive_sizer.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:meeting_room/localization/l10n.dart';
 import 'package:meeting_room/src/core/extensions/extensions.dart';
@@ -15,6 +16,7 @@ import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:meeting_room/src/features/otp/presentation/widgets/underline_style.dart';
 import 'package:meeting_room/src/features/permissions/permissions.dart';
 
+@RoutePage()
 class OtpPage extends StatelessWidget {
   const OtpPage({super.key});
   @override

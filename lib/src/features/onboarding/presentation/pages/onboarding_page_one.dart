@@ -1,16 +1,15 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meeting_room/localization/l10n.dart';
 import 'package:meeting_room/src/core/extensions/extensions.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
 import 'package:meeting_room/src/core/widgets/widgets.dart';
-import 'package:meeting_room/src/features/onboarding/presentation/pages/onboarding_page_four.dart';
 import 'package:meeting_room/src/features/onboarding/presentation/widgets/onboarding_page_base.dart';
+import 'package:meeting_room/src/features/onboarding/presentation/pages/onboarding_page_two.dart';
 
-class OnboardingPageThree extends StatelessWidget {
-  const OnboardingPageThree({super.key});
+class OnboardingPageOne extends StatelessWidget {
+  const OnboardingPageOne({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,31 +17,41 @@ class OnboardingPageThree extends StatelessWidget {
       body: Stack(children: [
         const OnboardingPageBase(),
         Positioned(
-          top: 100.54.h,
+          top: 132.54.h,
           left: 25.32.w,
           child: Container(
             // color: Colors.black,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Stack(
-                  children: [
-                    Container(
-                      width: 280.w, // Diameter of the circle
-                      height: 280.h, // Diameter of the circle
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
+                Container(
+                  width: 234.w, // Diameter of the circle
+                  height: 234.h, // Diameter of the circle
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      70.verticalSpace,
+                      SizedBox(
+                        height: 80.3653.h,
+                        child: SvgImage(
+                          'assets/icons/eblogo.svg',
+                        ),
                       ),
-                      child: Image.asset(
-                        'assets/images/single_tint_image.png',
-                      ),
-                    )
-                  ],
+                      10.verticalSpace,
+                      Text(
+                        l10n.pearlSpace,
+                        style: AppStyles.text18PxMedium,
+                      )
+                    ],
+                  ),
                 ),
-                45.h.verticalSpace,
+                55.h.verticalSpace,
                 Text(
-                  l10n.notifyTeamMembers,
+                  l10n.bookMeetings,
                   style: AppStyles.text24PxSemiBold,
                 ),
                 10.verticalSpace,
@@ -50,9 +59,9 @@ class OnboardingPageThree extends StatelessWidget {
                   height: 60.h,
                   width: 250.w,
                   child: Text(
-                    l10n.onboardingThree,
-                    textAlign: TextAlign.center,
+                    l10n.onboardingOne,
                     style: AppStyles.text12PxMedium,
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 80.verticalSpace,
@@ -74,8 +83,7 @@ class OnboardingPageThree extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  const OnboardingPageFour()));
+                              builder: (context) => const OnboardingPageTwo()));
                         },
                         child: Text(
                           l10n.next,

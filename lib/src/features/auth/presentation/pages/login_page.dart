@@ -9,6 +9,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meeting_room/localization/l10n.dart';
+import 'package:meeting_room/src/app/app.dart';
 import 'package:meeting_room/src/core/di/injector.dart';
 import 'package:meeting_room/src/core/extensions/extensions.dart';
 import 'package:meeting_room/src/core/routes/app_router.dart';
@@ -82,9 +83,11 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {
                         context.read<LoginCubit>().login(state.values);
                       },
-                      isDisabled: !state.isValid,
+                      isDisabled: state.emailField.value.isEmpty ||
+                          state.emailField.hasError,
                       loading: loading,
                       label: l10n.login,
+                      disabledColor: AppColors.primary,
                       fullWidth: true,
                     );
                   },
@@ -101,8 +104,8 @@ class LoginPage extends StatelessWidget {
                     5.horizontalSpace,
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => OtpPage()));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const OtpPage()));
                       },
                       child: Text(
                         l10n.termsOfService,
@@ -124,7 +127,7 @@ class LoginPage extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => TermsPage()));
+                            builder: (context) => const TermsPage()));
                       },
                       child: Text(
                         l10n.privacyPolicy,

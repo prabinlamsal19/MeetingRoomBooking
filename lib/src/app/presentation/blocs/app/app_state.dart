@@ -13,4 +13,6 @@ class AppState with _$AppState {
   const factory AppState.authenticated() = _Authenticated;
 
   const factory AppState.unAuthenticated() = _UnAuthenticated;
+
+  const factory AppState.isFirstTimeLogin() = _IsFirstTimeLogin;
 }

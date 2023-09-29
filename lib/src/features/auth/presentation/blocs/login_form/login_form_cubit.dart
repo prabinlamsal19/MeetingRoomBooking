@@ -20,7 +20,6 @@ class LoginFormCubit extends Cubit<LoginFormState> {
       : super(
           const LoginFormState(
             emailField: const Field<String>(value: ''),
-            passwordField: const Field<String>(value: '', obscureText: true),
           ),
         );
 
@@ -35,43 +34,14 @@ class LoginFormCubit extends Cubit<LoginFormState> {
     emit(state.copyWith(emailField: _emailField));
   }
 
-  void onPasswordChange(String value) {
-    late Field<String> _passwordField;
-    if (value.isNotEmpty && value.length > 8)
-      _passwordField = state.passwordField
-          .copyWith(value: value, isValid: true, errorMessage: '');
-    else
-      _passwordField = state.passwordField.copyWith(
-          value: value, errorMessage: 'Enter valid password', isValid: false);
-    emit(state.copyWith(passwordField: _passwordField));
-  }
-
-  void togglePassword() {
-    final passwordField = state.passwordField;
-    final currentToggleState = passwordField.obscureText;
-    final toggledField = state.passwordField.copyWith(
-      value: passwordField.value,
-      errorMessage: passwordField.errorMessage,
-      obscureText: !currentToggleState,
-    );
-    emit(state.copyWith(passwordField: toggledField));
-  }
-
   void setErrors({required Map<String, dynamic> errors}) {
     Field<String> emailField = state.emailField;
-    Field<String> passwordField = state.passwordField;
     if (errors.containsKey('email')) {
       emailField = emailField.copyWith(
           value: emailField.value,
           errorMessage: errors['email'],
           isValid: false);
     }
-    if (errors.containsKey('password')) {
-      passwordField = passwordField.copyWith(
-          value: passwordField.value,
-          errorMessage: errors['password'],
-          isValid: false);
-    }
-    emit(state.copyWith(emailField: emailField, passwordField: passwordField));
+    emit(state.copyWith(emailField: emailField));
   }
 }

@@ -15,6 +15,7 @@ import 'package:meeting_room/src/core/widgets/widgets.dart';
 import 'package:meeting_room/src/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:meeting_room/src/features/permissions/presentation/widgets/permission_duo.dart';
 
+@RoutePage()
 class PermissionsPage extends StatelessWidget {
   const PermissionsPage({Key? key});
 

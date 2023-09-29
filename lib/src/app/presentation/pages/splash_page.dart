@@ -25,8 +25,11 @@ class SplashPage extends StatelessWidget {
         listener: (context, state) {
           state.maybeWhen(
             orElse: () {},
+            isFirstTimeLogin: () {
+              getIt<AppRouter>().push(const OnboardingRoute());
+            },
             authenticated: () {
-              // getIt<AppRouter>().push(const DashboardRoute());
+              getIt<AppRouter>().push(const DashboardRoute());
             },
             unAuthenticated: () {
               getIt<AppRouter>().replace(const LoginRoute());

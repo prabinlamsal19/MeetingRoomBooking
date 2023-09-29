@@ -1,4 +1,5 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:meeting_room/localization/l10n.dart';
 import 'package:meeting_room/src/core/extensions/extensions.dart';

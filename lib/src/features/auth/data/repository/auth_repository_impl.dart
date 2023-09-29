@@ -35,4 +35,7 @@ class AuthRepositoryImpl extends BaseRepository implements AuthRepository {
 
   @override
   bool get isLoggedIn => _storage.hasSession;
+
+  @override
+  bool get isFirstTimeLogin => true;
 }

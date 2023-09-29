@@ -4,6 +4,7 @@
  * Company: EB Pearls
  */
 import 'package:adaptive_sizer/adaptive_sizer.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_view/calendar_view.dart';
 import 'package:hive_local_storage/hive_local_storage.dart';
@@ -13,9 +14,9 @@ import 'package:meeting_room/src/core/themes/app_colors.dart';
 import 'package:meeting_room/src/core/themes/app_styles.dart';
 import 'package:meeting_room/src/features/calendar/presentation/helpers/calender_helper.dart';
 
+@RoutePage()
 class CalendarPage extends StatelessWidget {
   CalendarPage({super.key});
-
   final event1 = CalendarEventData(
     title: 'Trainee meeting',
     date: DateTime(2021, 8, 10),
@@ -53,6 +54,9 @@ class CalendarPage extends StatelessWidget {
                   border: Border.all(width: 1, color: AppColors.textGrey),
                   borderRadius: BorderRadius.circular(6)),
               child: DayView(
+                safeAreaOption: const SafeAreaOption(
+                  top: false,
+                ),
                 eventTileBuilder: (date, events, boundary, start, end) {
                   // Return your widget to display as event tile.
                   return const Text('Event yeah!!');
@@ -67,10 +71,15 @@ class CalendarPage extends StatelessWidget {
                         style: AppStyles.text12Px,
                       );
                     } else {
-                      return Text(
-                        '  ${date.hour} PM',
-                        style: AppStyles.text12Px,
-                      );
+                      return (date.hour < 13)
+                          ? Text(
+                              '  ${date.hour} PM',
+                              style: AppStyles.text12Px,
+                            )
+                          : Text(
+                              '  ${date.hour - 12} PM',
+                              style: AppStyles.text12Px,
+                            );
                     }
                   } else {
                     return const Text('');
@@ -139,7 +148,7 @@ class CalendarPage extends StatelessWidget {
                 //     formatDateTime(date),
                 hourIndicatorSettings: const HourIndicatorSettings(
                     color: Color.fromARGB(255, 197, 196, 196), offset: -7),
-                minuteSlotSize: MinuteSlotSize.minutes15,
+                // minuteSlotSize: MinuteSlotSize.minutes15,
                 showVerticalLine: true,
                 showHalfHours: true,
                 headerStyle: const HeaderStyle(

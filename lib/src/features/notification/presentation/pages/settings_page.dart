@@ -4,6 +4,7 @@
  * Company: EB Pearls
  */
 import 'package:adaptive_sizer/adaptive_sizer.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:meeting_room/localization/l10n.dart';
 import 'package:meeting_room/src/core/extensions/extensions.dart';
@@ -11,6 +12,7 @@ import 'package:meeting_room/src/core/themes/theme.dart';
 import 'package:meeting_room/src/core/widgets/widgets.dart';
 import 'package:meeting_room/src/features/notification/notification.dart';
 
+@RoutePage()
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 

@@ -12,15 +12,13 @@ class LoginFormState with _$LoginFormState, FormMixin {
 
   const factory LoginFormState({
     required Field<String> emailField,
-    required Field<String> passwordField,
   }) = _LoginFormState;
 
   @override
-  List<Field> get fields => [emailField, passwordField];
+  List<Field> get fields => [emailField];
 
   @override
   Map<String, dynamic> get values => {
         'email': emailField.value.trim(),
-        'password': passwordField.value.trim(),
       };
 }

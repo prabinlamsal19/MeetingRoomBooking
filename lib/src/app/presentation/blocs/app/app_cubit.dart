@@ -3,7 +3,6 @@
  * Author: Kishor Mainali
  * Company: EB Pearls
  */
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:meeting_room/src/core/extensions/extensions.dart';
@@ -11,9 +10,7 @@ import 'package:meeting_room/src/core/helpers/device_info_helper.dart';
 import 'package:meeting_room/src/features/auth/domain/repository/auth_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-
 part 'app_cubit.freezed.dart';
-
 part 'app_state.dart';
 
 @injectable
@@ -30,6 +27,9 @@ class AppCubit extends Cubit<AppState> {
     await 2.delayedSeconds;
     if (_repository.isLoggedIn) {
       emit(const AppState.authenticated());
+    }
+    if (_repository.isFirstTimeLogin) {
+      emit(const AppState.isFirstTimeLogin());
     } else {
       emit(const AppState.unAuthenticated());
     }

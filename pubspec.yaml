@@ -66,6 +66,7 @@ dependencies:
   calendar_view: ^1.0.4
   intl: ^0.18.1
   flutter_slidable: ^3.0.0
+  dots_indicator: ^3.0.0
 
 
 dev_dependencies:

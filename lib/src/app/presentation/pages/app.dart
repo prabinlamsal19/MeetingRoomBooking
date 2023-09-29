@@ -35,37 +35,46 @@ class App extends StatelessWidget {
           create: (_) => LocaleCubit(),
         ),
       ],
-      child: BlocBuilder<LocaleCubit, LocaleState>(
-        builder: (context, state) {
-          return AdaptiveSizer(
-            builder: (context) {
-              return CalendarControllerProvider(
-                controller: EventController(),
-                child: MaterialApp.router(
-                  restorationScopeId: 'root',
-                  debugShowCheckedModeBanner: false,
-                  useInheritedMediaQuery: true,
-                  routeInformationParser: _appRouter.defaultRouteParser(),
-                  routerDelegate: _appRouter.delegate(),
-                  localizationsDelegates: [
-                    AppLocalizations.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  locale: state.locale,
-                  theme: AppTheme.lightTheme,
-                  supportedLocales: AppLocalizations.delegate.supportedLocales,
-                  builder: (BuildContext context, Widget? child) {
-                    ErrorWidget.builder = (FlutterErrorDetails details) =>
-                        AppErrorWidget(details: details);
-                    return child!;
-                  },
-                ),
-              );
-            },
-          );
+      child: BlocListener<AppCubit, AppState>(
+        listener: (context, state) {
+          state.maybeWhen(
+              orElse: () {},
+              isFirstTimeLogin: () =>
+                  _appRouter.replaceAll([const OnboardingRoute()]));
         },
+        child: BlocBuilder<LocaleCubit, LocaleState>(
+          builder: (context, state) {
+            return AdaptiveSizer(
+              builder: (context) {
+                return CalendarControllerProvider(
+                  controller: EventController(),
+                  child: MaterialApp.router(
+                    restorationScopeId: 'root',
+                    debugShowCheckedModeBanner: false,
+                    useInheritedMediaQuery: true,
+                    routeInformationParser: _appRouter.defaultRouteParser(),
+                    routerDelegate: _appRouter.delegate(),
+                    localizationsDelegates: [
+                      AppLocalizations.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                    locale: state.locale,
+                    theme: AppTheme.lightTheme,
+                    supportedLocales:
+                        AppLocalizations.delegate.supportedLocales,
+                    builder: (BuildContext context, Widget? child) {
+                      ErrorWidget.builder = (FlutterErrorDetails details) =>
+                          AppErrorWidget(details: details);
+                      return child!;
+                    },
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
