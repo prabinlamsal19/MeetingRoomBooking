@@ -47,43 +47,25 @@ class CalendarPage extends StatelessWidget {
             //     child: const Text("Add event(temp)")),
             Container(
               alignment: Alignment.topLeft,
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.only(bottom: 3),
               height: 510,
               width: 365,
               decoration: BoxDecoration(
                   border: Border.all(width: 1, color: AppColors.textGrey),
+                  color: AppColors.white,
                   borderRadius: BorderRadius.circular(6)),
               child: DayView(
                 safeAreaOption: const SafeAreaOption(
                   top: false,
+                  bottom: false,
                 ),
                 eventTileBuilder: (date, events, boundary, start, end) {
                   // Return your widget to display as event tile.
                   return const Text('Event yeah!!');
                 },
-                pageViewPhysics: PageScrollPhysics(),
                 startDuration: const Duration(hours: 8),
                 timeLineBuilder: (date) {
-                  if (date.minute == 0) {
-                    if (date.hour < 13) {
-                      return Text(
-                        '  ${date.hour} AM',
-                        style: AppStyles.text12Px,
-                      );
-                    } else {
-                      return (date.hour < 13)
-                          ? Text(
-                              '  ${date.hour} PM',
-                              style: AppStyles.text12Px,
-                            )
-                          : Text(
-                              '  ${date.hour - 12} PM',
-                              style: AppStyles.text12Px,
-                            );
-                    }
-                  } else {
-                    return const Text('');
-                  }
+                  return timelineBuilder(date);
                 },
                 timeLineOffset: 8,
                 fullDayEventBuilder: (events, date) {
@@ -148,7 +130,7 @@ class CalendarPage extends StatelessWidget {
                 //     formatDateTime(date),
                 hourIndicatorSettings: const HourIndicatorSettings(
                     color: Color.fromARGB(255, 197, 196, 196), offset: -7),
-                // minuteSlotSize: MinuteSlotSize.minutes15,
+                minuteSlotSize: MinuteSlotSize.minutes30,
                 showVerticalLine: true,
                 showHalfHours: true,
                 headerStyle: const HeaderStyle(
