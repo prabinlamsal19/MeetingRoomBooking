@@ -42,6 +42,13 @@ abstract class AppStyles {
     fontStyle: FontStyle.normal,
   );
 
+  //text 10px
+  static TextStyle text10Px = GoogleFonts.roboto(
+    fontSize: 10.sp,
+    height: calculateHeight(12, 10),
+    fontStyle: FontStyle.normal,
+  );
+
   // text 12px
 
   //regular

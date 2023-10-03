@@ -39,4 +39,7 @@ abstract class AppColors {
 
   //added colors
   static const Color purpleAppColor = const Color(0xFF7350ff);
+  static const Color greyMid = const Color(0xFFBFBCC9);
+  static const Color greyLight = const Color(0xFFF5F5F5);
+  static const Color boarderColor = const Color(0xFFD9D9D9);
 }

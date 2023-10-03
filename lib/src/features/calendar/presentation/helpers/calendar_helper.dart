@@ -32,20 +32,30 @@ Widget timelineBuilder(DateTime date) {
     if (date.hour < 13) {
       return Text(
         '  ${date.hour} AM',
-        style: AppStyles.text12Px,
+        style: AppStyles.text10Px,
       );
     } else {
       return (date.hour < 13)
           ? Text(
               '  ${date.hour} PM',
-              style: AppStyles.text12Px,
+              style: AppStyles.text10Px,
             )
           : Text(
               '  ${date.hour - 12} PM',
-              style: AppStyles.text12Px,
+              style: AppStyles.text10Px,
             );
     }
   } else {
     return const Text('');
   }
+}
+
+//for weekview
+
+String formatDateTimeShort(DateTime date) {
+  final day = date.day;
+  // final monthAbbreviation =
+  //     DateFormat.MMM().format(date);
+  final dayOfWeekAbbreviation = DateFormat.E().format(date);
+  return '$day $dayOfWeekAbbreviation';
 }
