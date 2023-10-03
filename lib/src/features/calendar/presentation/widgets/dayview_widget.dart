@@ -1,18 +1,30 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
 import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meeting_room/src/core/di/injector.dart';
 import 'package:meeting_room/src/core/themes/app_colors.dart';
 import 'package:meeting_room/src/features/calendar/presentation/blocs/calendar/calendar_cubit.dart';
 import 'package:meeting_room/src/features/calendar/presentation/helpers/calendar_helper.dart';
 
-class DayViewWidget extends StatelessWidget {
+class DayViewWidget extends StatefulWidget {
   const DayViewWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final calendarCubit = getIt<CalendarCubit>();
+  State<DayViewWidget> createState() => _DayViewWidgetState();
+}
 
+class _DayViewWidgetState extends State<DayViewWidget> {
+  @override
+  Widget build(BuildContext context) {
+    final event1 = CalendarEventData(
+        title: 'Trainee meeting',
+        date: DateTime(2023, 1, 1),
+        event: 'Trainee meeting Event',
+        startTime: DateTime(2023, 1, 1, 10, 0),
+        endTime: DateTime(2023, 1, 1, 12, 0),
+        color: Colors.blue);
+    CalendarControllerProvider.of(context).controller.add(event1);
     return Container(
       alignment: Alignment.topLeft,
       padding: const EdgeInsets.only(bottom: 3),
@@ -23,6 +35,7 @@ class DayViewWidget extends StatelessWidget {
           color: AppColors.white,
           borderRadius: BorderRadius.circular(6)),
       child: DayView(
+        controller: CalendarControllerProvider.of(context).controller,
         liveTimeIndicatorSettings: HourIndicatorSettings.none(),
         showQuarterHours: true,
         safeAreaOption: const SafeAreaOption(
@@ -36,7 +49,9 @@ class DayViewWidget extends StatelessWidget {
         },
         eventTileBuilder: (date, events, boundary, start, end) {
           // Return your widget to display as event tile.
-          return const Text('Event yeah!!');
+          return Container(
+              color: AppColors.purpleAppColor,
+              child: const Text('Event yeah!!'));
         },
         startDuration: const Duration(hours: 8),
         timeLineBuilder: (date) {

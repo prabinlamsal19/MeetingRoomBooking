@@ -17,6 +17,7 @@ import 'package:meeting_room/src/core/helpers/device_info_helper.dart';
 import 'package:meeting_room/src/core/routes/app_router.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
 import 'package:meeting_room/src/core/widgets/widgets.dart';
+import 'package:meeting_room/src/features/calendar/presentation/blocs/toogle_button/toggle_button_cubit.dart';
 
 class App extends StatelessWidget {
   App({super.key});
@@ -34,6 +35,9 @@ class App extends StatelessWidget {
         BlocProvider<LocaleCubit>(
           create: (_) => LocaleCubit(),
         ),
+        BlocProvider<ToggleButtonCubit>(
+          create: (_) => ToggleButtonCubit(),
+        )
       ],
       child: BlocListener<AppCubit, AppState>(
         listener: (context, state) {

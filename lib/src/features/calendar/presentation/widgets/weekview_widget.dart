@@ -33,8 +33,7 @@ class WeekViewWidget extends StatelessWidget {
               border: Border(
                 right: BorderSide(
                     width: 1,
-                    color: AppColors.greyMid 
-                    ), // Left border with width 1
+                    color: AppColors.greyMid), // Left border with width 1
               ),
             ),
             child: Text(
@@ -52,9 +51,7 @@ class WeekViewWidget extends StatelessWidget {
           decoration: const BoxDecoration(
             color: AppColors.greyLight,
             border: Border(
-              right: BorderSide(
-                  width: 1,
-                  color: AppColors.greyMid), // Left border with width 1
+              right: BorderSide(width: 1, color: AppColors.greyMid),
             ),
           ),
           child: Center(
