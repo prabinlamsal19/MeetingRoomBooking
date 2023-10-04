@@ -24,7 +24,7 @@ class WeekViewWidget extends StatelessWidget {
           ),
           color: AppColors.white,
           borderRadius: BorderRadius.circular(6)),
-      child: WeekView(
+      child: WeekView( 
         timeLineWidth: 48,
         weekNumberBuilder: (firstDayOfWeek) {
           return Container(

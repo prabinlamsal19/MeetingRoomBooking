@@ -26,6 +26,34 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final events = [
+      CalendarEventData(
+          title: 'Trainee Meeting Event', //title is made equivalent to speaker
+          date: DateTime(2023, 1, 1),
+          event: 'Hello',
+          startTime: DateTime(2023, 1, 1, 10, 5),
+          endTime: DateTime(2023, 1, 1, 12, 0),
+          description: 'Ground Floor',
+          color: AppColors.primary),
+      CalendarEventData(
+          title: 'Trainee Teaching Event', //title is made equivalent to speaker
+          date: DateTime(2023, 1, 1),
+          event: 'Hello',
+          startTime: DateTime(2023, 1, 1, 13, 5),
+          endTime: DateTime(2023, 1, 1, 14, 0),
+          description: 'Ground Floor',
+          color: AppColors.primary),
+      CalendarEventData(
+          title:
+              'Trainee Motivation Event', //title is made equivalent to speaker
+          date: DateTime(2023, 1, 1),
+          event: 'Hello',
+          startTime: DateTime(2023, 1, 1, 17, 5),
+          endTime: DateTime(2023, 1, 1, 20, 0),
+          description: 'Ground Floor',
+          color: AppColors.primary),
+    ];
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<AppCubit>(
@@ -51,11 +79,11 @@ class App extends StatelessWidget {
             return AdaptiveSizer(
               builder: (context) {
                 return CalendarControllerProvider(
-                  controller: EventController(),
+                  controller: EventController()..addAll(events),
                   child: MaterialApp.router(
                     restorationScopeId: 'root',
                     debugShowCheckedModeBanner: false,
-                    useInheritedMediaQuery: true,
+                    useInheritedMediaQuery: true, 
                     routeInformationParser: _appRouter.defaultRouteParser(),
                     routerDelegate: _appRouter.delegate(),
                     localizationsDelegates: [
