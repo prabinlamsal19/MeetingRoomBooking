@@ -29,6 +29,7 @@ class CalendarPage extends StatelessWidget {
             week: () => isWeekSelected = true,
           );
           return SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
             child: Column(
               children: [
                 16.verticalSpace,

@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meeting_room/localization/l10n.dart';
 import 'package:meeting_room/src/core/extensions/extensions.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
+import 'package:meeting_room/src/features/dashboard/presentation/widgets/blinking_svg.dart';
 
 class ActiveBox extends StatelessWidget {
   ActiveBox(
@@ -46,7 +47,7 @@ class ActiveBox extends StatelessWidget {
                       '${l10n.host}:$host',
                       style: AppStyles.text14Px.white,
                     ),
-                    25.verticalSpace,
+                    40.verticalSpace,
                     Text(
                       '${timeLeft}m left',
                       style: AppStyles.text14Px.white,
@@ -65,7 +66,7 @@ class ActiveBox extends StatelessWidget {
           Positioned(
               top: 10,
               right: 10,
-              child: SvgPicture.asset('assets/icons/video_icon.svg')),
+              child: BlinkWidget(child: SvgPicture.asset('assets/icons/video_icon.svg'))),
         ]),
       ),
     );

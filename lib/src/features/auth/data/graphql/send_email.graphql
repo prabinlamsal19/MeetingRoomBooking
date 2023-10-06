@@ -1,0 +1,5 @@
+mutation SendEmail($email: String!) {
+  sendEmail(sendEmail: { email: $email }) {
+    otpBool
+  }
+}

@@ -65,10 +65,17 @@ dependencies:
   flutter_otp_text_field: ^1.1.1
   calendar_view:
     git:
-      url: https://github.com/prabinlamsal19/flutter_calendar_view.git
+      url: https://github.com/prabinlamsal19/flutter_calendar_view.git 
+      ref: noscroll
   intl: ^0.18.1
   flutter_slidable: ^3.0.0
   dots_indicator: ^3.0.0
+  const_date_time: ^1.0.3
+  ferry: ^0.14.2+1 
+  gql_http_link: 
+  hive_flutter: ^1.1.0
+  ferry_hive_store: ^0.5.1
+
 
 
 dev_dependencies:
@@ -82,6 +89,7 @@ dev_dependencies:
   json_serializable: ^6.6.1
   freezed: ^2.3.2
   injectable_generator: ^2.1.4
+  ferry_generator: 
   auto_route_generator: ^7.3.1
 
   #testing

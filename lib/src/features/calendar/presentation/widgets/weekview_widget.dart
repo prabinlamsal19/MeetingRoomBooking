@@ -24,7 +24,9 @@ class WeekViewWidget extends StatelessWidget {
           ),
           color: AppColors.white,
           borderRadius: BorderRadius.circular(6)),
-      child: WeekView( 
+      child: WeekView(
+        scrollOffset: 301.5,
+        controller: CalendarControllerProvider.of(context).controller,
         timeLineWidth: 48,
         weekNumberBuilder: (firstDayOfWeek) {
           return Container(
@@ -67,8 +69,16 @@ class WeekViewWidget extends StatelessWidget {
           bottom: false,
         ),
         eventTileBuilder: (date, events, boundary, start, end) {
-          // Return your widget to display as event tile.
-          return const Text('Event yeah!!');
+          return Container(
+            margin: const EdgeInsets.symmetric(horizontal: 2),
+            decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1,
+                  color: const Color(0xFFC19B02),
+                ),
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(5)),
+          );
         },
         timeLineBuilder: (date) {
           return timelineBuilder(date);
@@ -103,7 +113,7 @@ class WeekViewWidget extends StatelessWidget {
         showLiveTimeLineInAllDays: true,
         minDay: DateTime(1990),
         maxDay: DateTime(2050),
-        initialDay: DateTime(2021),
+        initialDay: DateTime(2023, 1, 1),
         heightPerMinute: 0.67,
         // eventArranger:
         //     const SideEventArranger(), //for simultaneous event

@@ -21,17 +21,17 @@ class LoginCubit extends Cubit<LoginState> {
 
   void login(Map<String, dynamic> values) async {
     emit(const LoginState.loading());
-    final response = await _repository.login(values);
-    emit(response.fold(
-      (error) => error.when(
-        serverError: (message) => LoginState.error(message: message),
-        validationsError: (message, errors) =>
-            LoginState.validationError(message: message, errors: errors),
-        noInternet: () =>
-            const LoginState.error(message: 'No Internet Connection'),
-        unAuthorized: () => const LoginState.error(message: 'UnAuthorized'),
-      ),
-      (message) => LoginState.success(message: message),
-    ));
+    // final response = await _repository.loginWithEmail(values);
+    // emit(response.fold(
+    //   (error) => error.when(
+    //     serverError: (message) => LoginState.error(message: message),
+    //     validationsError: (message, errors) =>
+    //         LoginState.validationError(message: message, errors: errors),
+    //     noInternet: () =>
+    //         const LoginState.error(message: 'No Internet Connection'),
+    //     unAuthorized: () => const LoginState.error(message: 'UnAuthorized'),
+    //   ),
+    //   (message) => LoginState.success(message: message),
+    // ));
   }
 }

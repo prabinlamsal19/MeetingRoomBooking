@@ -1,3 +1,15 @@
+Authorization Bearer ejakfjdlajflsd.3j32lrlerflfl34FSDFASF#sdfakjfl332..2fasd
+
+
+{
+  "headers": {
+    "Authorization": "Bearer your_access_token_here"
+  }
+}
+
+
+above is a demo authorization bearer 
+
 # Meeting Room
 
 This template uses [flutter_bloc](https://pub.dev/packages/flutter_bloc) as state management and follows uncle bob's

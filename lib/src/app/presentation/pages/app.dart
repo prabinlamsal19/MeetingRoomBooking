@@ -17,7 +17,11 @@ import 'package:meeting_room/src/core/helpers/device_info_helper.dart';
 import 'package:meeting_room/src/core/routes/app_router.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
 import 'package:meeting_room/src/core/widgets/widgets.dart';
+import 'package:meeting_room/src/features/calendar/data/repository/calendar_repository_impl.dart';
+import 'package:meeting_room/src/features/calendar/domain/repository/calendar_repository.dart';
+import 'package:meeting_room/src/features/calendar/presentation/blocs/calendar/calendar_cubit.dart';
 import 'package:meeting_room/src/features/calendar/presentation/blocs/toogle_button/toggle_button_cubit.dart';
+import 'package:meeting_room/src/features/dashboard/presentation/blocs/dashboard/dashboard_cubit.dart';
 
 class App extends StatelessWidget {
   App({super.key});
@@ -26,34 +30,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final events = [
-      CalendarEventData(
-          title: 'Trainee Meeting Event', //title is made equivalent to speaker
-          date: DateTime(2023, 1, 1),
-          event: 'Hello',
-          startTime: DateTime(2023, 1, 1, 10, 5),
-          endTime: DateTime(2023, 1, 1, 12, 0),
-          description: 'Ground Floor',
-          color: AppColors.primary),
-      CalendarEventData(
-          title: 'Trainee Teaching Event', //title is made equivalent to speaker
-          date: DateTime(2023, 1, 1),
-          event: 'Hello',
-          startTime: DateTime(2023, 1, 1, 13, 5),
-          endTime: DateTime(2023, 1, 1, 14, 0),
-          description: 'Ground Floor',
-          color: AppColors.primary),
-      CalendarEventData(
-          title:
-              'Trainee Motivation Event', //title is made equivalent to speaker
-          date: DateTime(2023, 1, 1),
-          event: 'Hello',
-          startTime: DateTime(2023, 1, 1, 17, 5),
-          endTime: DateTime(2023, 1, 1, 20, 0),
-          description: 'Ground Floor',
-          color: AppColors.primary),
-    ];
-
     return MultiBlocProvider(
       providers: [
         BlocProvider<AppCubit>(
@@ -65,6 +41,12 @@ class App extends StatelessWidget {
         ),
         BlocProvider<ToggleButtonCubit>(
           create: (_) => ToggleButtonCubit(),
+        ),
+        BlocProvider<CalendarCubit>(
+          create: (_) => CalendarCubit(),
+        ),
+        BlocProvider<DashboardCubit>(
+          create: (_) => DashboardCubit(),
         )
       ],
       child: BlocListener<AppCubit, AppState>(
@@ -79,11 +61,11 @@ class App extends StatelessWidget {
             return AdaptiveSizer(
               builder: (context) {
                 return CalendarControllerProvider(
-                  controller: EventController()..addAll(events),
+                  controller: EventController()
+                    ..addAll(CalendarRepositoryImpl().getEvents()),
                   child: MaterialApp.router(
                     restorationScopeId: 'root',
                     debugShowCheckedModeBanner: false,
-                    useInheritedMediaQuery: true, 
                     routeInformationParser: _appRouter.defaultRouteParser(),
                     routerDelegate: _appRouter.delegate(),
                     localizationsDelegates: [

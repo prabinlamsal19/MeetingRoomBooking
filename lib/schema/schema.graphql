@@ -1,0 +1,149 @@
+type GetProfileDto {
+  email: String!
+  fullName: String
+  phoneNumber: String
+  designation: String
+  floor: Float
+  profilePic: String
+}
+
+type OtpMail {
+  otpBool: Boolean!
+}
+
+type Token {
+  refreshToken: String!
+  accessToken: String!
+}
+
+type NewAccessToken {
+  accessToken: String!
+}
+
+type HostDescription {
+  fullName: String!
+  designation: String!
+}
+
+type Event {
+  hostId: String!
+  eventName: String!
+  date: DateTime
+  floor: Float!
+  startTime: DateTime
+  endTime: DateTime
+  description: String!
+  notifyTime: NotifyTime!
+  guests: [String!]!
+  googleEvent: Boolean!
+  release: Boolean!
+  isdeleted: Boolean!
+  host: HostDescription
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""
+Notification time options
+"""
+enum NotifyTime {
+  TEN_MINUTES
+  FIFTEEN_MINUTES
+  THIRTY_MINUTES
+  ONE_HOUR
+}
+
+type Floor {
+  floor: Float!
+  others: String
+  isdeleted: Boolean!
+}
+
+type upcomingEventsDto {
+  eventName: String!
+  description: String!
+  floor: Float!
+  startTime: DateTime!
+  endTime: DateTime!
+  hostInfo: HostDescription
+}
+
+type listMyBookingDto {
+  eventName: String!
+  date: DateTime!
+  startTime: DateTime!
+  endTime: DateTime!
+}
+
+type bookingDetailsDto {
+  eventName: String!
+  description: String!
+  guests: [String!]!
+  host: HostDescription!
+}
+
+type guestListDto {
+  guests: [String!]!
+}
+
+type Query {
+  getUserProfile: GetProfileDto!
+  myEvent: [listMyBookingDto!]
+  getBooking(date: DateTime!, floor: Float!): [listMyBookingDto!]!
+  getDetails(bookingId: String!): bookingDetailsDto!
+  guestList(bookingId: String!): [guestListDto!]!
+  upcomingEvents(limit: Float): [upcomingEventsDto!]!
+  ongoingEvents(limit: Float): [upcomingEventsDto!]!
+  listFloor: [Floor!]!
+}
+
+type Mutation {
+  editUser(edit: EditUserDto!): Boolean!
+  emailLogin(emailLogin: LoginDto!): OtpMail!
+  verifyOtp(verifyOtp: OtpDto!): Token!
+  refreshToken(refreshToken: String!): NewAccessToken!
+  createManualEvent(create: CreateBookingDto!): Event!
+  updateEvent(bookingId: String!, updatedFields: CreateBookingDto!): Event!
+  releaseTime(bookingId: String!): Event
+  deleteEvent(bookingId: String!): Event!
+  createFloor(floor: createFloorDto!): Floor!
+  deleteFloor(floorId: String!): Floor!
+  updateFloor(floorId: String!, updatedFields: createFloorDto!): Floor!
+}
+
+input EditUserDto {
+  fullName: String
+  phoneNumber: String
+  designation: String
+  floor: Float
+  profilePic: String
+}
+
+input LoginDto {
+  email: String!
+}
+
+input OtpDto {
+  email: String!
+  otp: String!
+}
+
+input CreateBookingDto {
+  eventName: String!
+  description: String!
+  date: DateTime!
+  floor: Float!
+  startTime: DateTime!
+  endTime: DateTime!
+  googleEvent: Boolean!
+  notifyTime: String!
+  guests: [String!]!
+}
+
+input createFloorDto {
+  floor: Float!
+  others: String
+}

@@ -1,5 +1,7 @@
 import 'package:adaptive_sizer/adaptive_sizer.dart';
 import 'package:calendar_view/calendar_view.dart';
+import 'package:const_date_time/const_date_time.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meeting_room/src/core/di/injector.dart';
@@ -8,14 +10,9 @@ import 'package:meeting_room/src/features/calendar/presentation/blocs/calendar/c
 import 'package:meeting_room/src/features/calendar/presentation/helpers/calendar_helper.dart';
 import 'package:meeting_room/src/features/calendar/presentation/widgets/event_tile.dart';
 
-class DayViewWidget extends StatefulWidget {
+class DayViewWidget extends StatelessWidget {
   const DayViewWidget({super.key});
 
-  @override
-  State<DayViewWidget> createState() => _DayViewWidgetState();
-}
-
-class _DayViewWidgetState extends State<DayViewWidget> {
   @override
   Widget build(BuildContext context) {
     // CalendarControllerProvider.of(context).controller.add(event1);
@@ -29,16 +26,20 @@ class _DayViewWidgetState extends State<DayViewWidget> {
           color: AppColors.white,
           borderRadius: BorderRadius.circular(6)),
       child: DayView(
-        // fullDayEventBuilder: (events, date) {
-        //   return Container(
-        //       color: AppColors.fabRedBackground,
-        //       child: Text(events.toString() + date.day.toString()));
-        // },
+        onDateTap: (date) => print(date),
+        onDragDownStart: (date) => print(date),
+        onDragDownEnd: (date) => print(date),
+        scrollOffset: 301.5,
+        scrollPhysics: const NeverScrollableScrollPhysics(),
+        fullDayEventBuilder: (events, date) {
+          return Container(
+              color: AppColors.fabRedBackground,
+              child: Text(events.toString() + date.day.toString()));
+        },
         eventTileBuilder: (date, events, boundary, start, end) {
           // Return your widget to display as event tile.
           return EventTile(events: events);
         },
-        onEventTap: (events, date) => print(events),
         controller: CalendarControllerProvider.of(context).controller,
         liveTimeIndicatorSettings: HourIndicatorSettings.none(),
         showQuarterHours: true,
@@ -48,7 +49,7 @@ class _DayViewWidgetState extends State<DayViewWidget> {
           top: false,
           bottom: false,
         ),
-        startDuration: const Duration(hours: 8),
+        startDuration: const Duration(hours: 7, minutes: 30),
         timeLineBuilder: (date) {
           return timelineBuilder(date);
         },
@@ -106,7 +107,7 @@ class _DayViewWidgetState extends State<DayViewWidget> {
         ),
         hourIndicatorSettings:
             const HourIndicatorSettings(color: AppColors.greyMid, offset: -7),
-        minuteSlotSize: MinuteSlotSize.minutes30,
+        minuteSlotSize: MinuteSlotSize.minutes15,
         showVerticalLine: true,
         showHalfHours: true,
         headerStyle: const HeaderStyle(

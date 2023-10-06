@@ -11,5 +11,5 @@ abstract class AuthRepository {
 
   bool get isFirstTimeLogin;
 
-  EitherResponse<String> login(Map<String, dynamic> values);
+  // EitherResponse<String> loginWithEmail(Map<String, dynamic> values);
 }

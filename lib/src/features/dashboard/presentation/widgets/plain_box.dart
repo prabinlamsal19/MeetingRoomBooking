@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:meeting_room/localization/l10n.dart';
-import 'package:meeting_room/src/core/extensions/extensions.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
 
-class PlaneBox extends StatelessWidget {
-  PlaneBox({super.key, required this.text});
-  String text;
+class PlainBox extends StatelessWidget {
+  PlainBox({super.key, required this.floor});
+  String floor;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +18,7 @@ class PlaneBox extends StatelessWidget {
           elevation: 3,
           child: Center(
             child: Text(
-              text,
+              floor,
               style: AppStyles.text16PxMedium,
             ),
           ),

@@ -1,0 +1,13 @@
+query GetOngoingEvents{
+  ongoingEvents {
+    eventName
+    description
+    floor
+    startTime
+    endTime
+    hostInfo {
+      fullName
+      designation
+    }
+  }
+}
