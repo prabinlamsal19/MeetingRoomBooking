@@ -7,6 +7,5 @@
 import 'package:meeting_room/src/features/dashboard/data/models/floor_model.dart';
 
 abstract class DashboardRepository {
-  DashboardRepository() : floors = [];
-  List<FloorModel> floors;
+  void getRoomsAndEvents();
 }

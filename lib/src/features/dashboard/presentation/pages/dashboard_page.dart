@@ -2,10 +2,12 @@ import 'package:adaptive_sizer/adaptive_sizer.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:meeting_room/localization/l10n.dart';
+import 'package:meeting_room/src/core/di/injector.dart';
 import 'package:meeting_room/src/core/themes/theme.dart';
 import 'package:meeting_room/src/core/widgets/empty_state_widget.dart';
 import 'package:meeting_room/src/features/calendar/calendar.dart';
 import 'package:meeting_room/src/features/dashboard/data/models/floor_model.dart';
+import 'package:meeting_room/src/features/dashboard/domain/repository/dashboard_repository.dart';
 import 'package:meeting_room/src/features/dashboard/presentation/widgets/active_box.dart';
 import 'package:meeting_room/src/features/dashboard/presentation/widgets/plain_box.dart';
 import 'package:meeting_room/src/features/notification/presentation/pages/settings_page.dart';
@@ -107,11 +109,12 @@ class DashboardPage extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const SettingsPage(),
-                      ),
-                    );
+                    // Navigator.of(context).push(
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const SettingsPage(),
+                    //   ),
+                    // );
+                    getIt<DashboardRepository>().getRoomsAndEvents();
                   },
                   child: const Text('settings'),
                 ),
