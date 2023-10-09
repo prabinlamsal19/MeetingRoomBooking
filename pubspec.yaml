@@ -75,6 +75,7 @@ dependencies:
   gql_http_link: 
   hive_flutter: ^1.1.0
   ferry_hive_store: ^0.5.1
+  flutter_secure_storage: ^9.0.0
 
 
 

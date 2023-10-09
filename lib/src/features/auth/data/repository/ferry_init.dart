@@ -23,7 +23,7 @@ class FerryClientRepository {
     final link = HttpLink(
       'https://a469-202-166-198-75.ngrok-free.app/graphql',
       defaultHeaders: {
-        'Authorization': 'Bearer $authToken',
+        'Authorization': '$authToken',
       },
     );
     final client = Client(

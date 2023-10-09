@@ -15,8 +15,8 @@ class ActiveBox extends StatelessWidget {
       required this.timeLeft});
   String floor;
   String host;
-  int totalTime;
-  int timeLeft;
+  Duration totalTime;
+  Duration timeLeft;
 
   @override
   Widget build(BuildContext context) {
@@ -49,14 +49,17 @@ class ActiveBox extends StatelessWidget {
                     ),
                     40.verticalSpace,
                     Text(
-                      '${timeLeft}m left',
+                      (timeLeft.inHours != 0)
+                          ? '${timeLeft.inHours}h ${timeLeft.inMinutes.remainder(60)}m left'
+                          : '${timeLeft.inMinutes.remainder(60)}m',
                       style: AppStyles.text14Px.white,
                     ),
                     5.verticalSpace,
                     LinearProgressIndicator(
                       backgroundColor: AppColors.white,
                       color: AppColors.primary,
-                      value: (timeLeft / totalTime),
+                      value: ((timeLeft.inHours * 60 + timeLeft.inMinutes) /
+                          (totalTime.inHours * 60 + totalTime.inMinutes)),
                     )
                   ],
                 ),
@@ -66,7 +69,8 @@ class ActiveBox extends StatelessWidget {
           Positioned(
               top: 10,
               right: 10,
-              child: BlinkWidget(child: SvgPicture.asset('assets/icons/video_icon.svg'))),
+              child: BlinkWidget(
+                  child: SvgPicture.asset('assets/icons/video_icon.svg'))),
         ]),
       ),
     );

@@ -3,12 +3,12 @@ class FloorModel {
       {required this.floorName,
       required this.isActive,
       this.host = '',
-      this.totalTime = 0,
-      this.timeLeft = 0});
+      this.totalTime,
+      this.timeLeft});
 
   String floorName;
   String host;
-  int timeLeft;
+  Duration? timeLeft;
   bool isActive;
-  int totalTime;
+  Duration? totalTime;
 }

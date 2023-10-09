@@ -4,6 +4,7 @@ query GetOngoingEvents {
     description
     floor
     startTime
+    endTime
     hostInfo {
       fullName
       designation

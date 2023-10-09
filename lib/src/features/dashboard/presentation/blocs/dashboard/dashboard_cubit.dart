@@ -16,6 +16,11 @@ part 'dashboard_state.dart';
 
 @injectable
 class DashboardCubit extends Cubit<DashboardState> {
-  DashboardCubit() : super( const DashboardState.initial());
-  
+  DashboardCubit() : super(const DashboardState.initial());
+
+  void getFloorsList() async {
+    emit(const DashboardState.loading());
+    final floorList = await getIt<DashboardRepository>().getRoomsAndEvents();
+    emit(DashboardState.success(floorList: floorList));
+  }
 }
