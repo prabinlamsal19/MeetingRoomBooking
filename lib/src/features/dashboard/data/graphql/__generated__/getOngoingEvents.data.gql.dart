@@ -60,7 +60,6 @@ abstract class GGetOngoingEventsData_ongoingEvents
   String get description;
   double get floor;
   _i2.GDateTime get startTime;
-  _i2.GDateTime get endTime;
   GGetOngoingEventsData_ongoingEvents_hostInfo? get hostInfo;
   static Serializer<GGetOngoingEventsData_ongoingEvents> get serializer =>
       _$gGetOngoingEventsDataOngoingEventsSerializer;

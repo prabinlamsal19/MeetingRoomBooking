@@ -11,22 +11,24 @@ import 'package:injectable/injectable.dart';
 class FerryClientRepository {
   Future<Client> initClient() async {
     final String authToken =
-        'Bearer ejakfjdlajflsd.3j32lrlerflfl34FSDFASF#sdfakjfl332..2fasd';
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MWU5NTNkOTUyODgyNWVlM2E2ZTZiNyIsImVtYWlsIjoicHJhYmluLmxhbXNhbEBlYnBlYXJscy5jb20iLCJpYXQiOjE2OTY4MjIwNjEsImV4cCI6MTY5Njg0NzI2MX0.fpRW9l_npKvti7--k6gugqkiahaNmZuWcqmgGBZ1bv0';
 
     Hive.init('hive_data');
     await Hive.initFlutter();
     final box = await Hive.openBox('graphql');
 
     final store = HiveStore(box);
-
     final cache = Cache(store: store);
 
-    final link = HttpLink('https://b08a-202-166-198-75.ngrok-free.app/graphql',
-        defaultHeaders: {'Authorization': 'jptauthtoken'});
-
+    final link = HttpLink(
+      'https://a469-202-166-198-75.ngrok-free.app/graphql',
+      defaultHeaders: {
+        'Authorization': 'Bearer $authToken',
+      },
+    );
     final client = Client(
       link: link,
-      cache: cache,
+      //  cache: cache
     );
     return client;
   }

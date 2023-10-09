@@ -31,15 +31,19 @@ class DashboardRepositoryImpl implements DashboardRepository {
   @override
   void getRoomsAndEvents() async {
     final gqlClient = await getIt<FerryClientRepository>().initClient();
-    await gqlClient
-        .request(listFloorsRequest)
-        .listen((response) => print(response.data!));
+    late final roomList;
+    late final ongoingEvetsList;
+
+    await gqlClient.request(listFloorsRequest).listen((response) {
+      roomList = response.data?.listFloor;
+    });
 
     print('************below is the ongoing events request******************');
 
-    await gqlClient
-        .request(getOngoingEventsRequest)
-        .listen((event) => print(event.data));
+    await gqlClient.request(getOngoingEventsRequest).listen((event) {
+      ongoingEvetsList = event.data;
+      print(event.data);
+    });
   }
 
   // @override
